@@ -46,10 +46,11 @@ document.querySelector('#app').innerHTML = `
 
       <div class="nav-center">
         <button class="nav-link active" data-view="home">Home</button>
+        <button class="nav-link" data-view="learn">How It Works</button>
         <button class="nav-link" data-view="time">Time Vault</button>
         <button class="nav-link" data-view="secret">Secret Vault</button>
-        <button class="nav-link" data-view="learn">How It Works</button>
         <button class="nav-link" data-view="vaults">My Vaults</button>
+        <button class="nav-link" data-view="faq">FAQ</button>
       </div>
 
       <div class="network">
@@ -62,7 +63,7 @@ document.querySelector('#app').innerHTML = `
 
       <section class="v4-hero">
         <div class="v4-hero-copy">
-          <div class="eyebrow">KASPA COVENANT INFRASTRUCTURE</div>
+          <div class="eyebrow">KAS LOGIC // COVENANT PROTOCOL</div>
 
           <h1>
             Make KAS<br>
@@ -76,9 +77,9 @@ document.querySelector('#app').innerHTML = `
           </p>
 
           <div class="trust-row">
+            <span>TESTNET-10</span>
+            <span>KASWARE REQUIRED</span>
             <span>NON-CUSTODIAL</span>
-            <span>ON-CHAIN RULES</span>
-            <span>NO TRUSTED INTERMEDIARY</span>
           </div>
         </div>
 
@@ -123,12 +124,12 @@ document.querySelector('#app').innerHTML = `
       <section class="explore-section">
         <div class="section-heading">
           <div>
-            <span>AVAILABLE NOW</span>
-            <h2>Explore covenants</h2>
+            <span>LIVE // TESTNET-10</span>
+            <h2>Live Covenants</h2>
           </div>
 
           <p>
-            Different conditions create different ways to control KAS.
+            Time and secret-based spending conditions, available on Testnet-10.
           </p>
         </div>
 
@@ -140,7 +141,7 @@ document.querySelector('#app').innerHTML = `
               <span class="option-status">LIVE</span>
             </div>
 
-            <div class="option-type">TIME COVENANT</div>
+            <div class="option-type">01 // TIME COVENANT // ACTIVE</div>
 
             <h3>Time Vault</h3>
 
@@ -151,7 +152,7 @@ document.querySelector('#app').innerHTML = `
 
             <div class="condition-box">
               <span>CONDITION</span>
-              <code>TIME REACHED + OWNER</code>
+              <code>TIME + OWNER &rarr; SPEND</code>
             </div>
 
             <div class="use-cases">
@@ -171,7 +172,7 @@ document.querySelector('#app').innerHTML = `
               <span class="option-status">LIVE</span>
             </div>
 
-            <div class="option-type">HASHLOCK COVENANT</div>
+            <div class="option-type">02 // HASHLOCK COVENANT // ACTIVE</div>
 
             <h3>Secret Vault</h3>
 
@@ -182,7 +183,7 @@ document.querySelector('#app').innerHTML = `
 
             <div class="condition-box">
               <span>CONDITION</span>
-              <code>CORRECT SECRET</code>
+              <code>SECRET &rarr; PROOF &rarr; CLAIM</code>
             </div>
 
             <div class="use-cases">
@@ -536,12 +537,12 @@ document.querySelector('#app').innerHTML = `
 
         <div class="tool-intro">
 
-          <div class="eyebrow">TIME VAULT</div>
+          <div class="eyebrow">01 // LIVE COVENANT // TIME<br><small>TESTNET-10 // KASWARE REQUIRED</small></div>
 
-          <h1>Lock now.<br><span>Unlock later.</span></h1>
+          <h1>TIME<br><span>VAULT.</span></h1>
 
           <p class="tool-lead">
-            Create a time-locked KAS covenant with an owner-controlled spending path.
+            Lock KAS against time. The owner spending path becomes valid only after the temporal condition is satisfied.
           </p>
 
           <div class="tool-condition">
@@ -549,26 +550,7 @@ document.querySelector('#app').innerHTML = `
             <code>TIME + OWNER &rarr; SPEND</code>
           </div>
 
-          <div class="tool-how">
-            <span class="tool-mini-label">HOW IT WORKS</span>
-
-            <div class="tool-step">
-              <b>01</b>
-              <p>Choose how long the KAS should remain locked.</p>
-            </div>
-
-            <div class="tool-step">
-              <b>02</b>
-              <p>Fund the generated covenant address.</p>
-            </div>
-
-            <div class="tool-step">
-              <b>03</b>
-              <p>After the condition is reached, the owner can spend.</p>
-            </div>
           </div>
-
-        </div>
 
         <section class="vault-card tool-action-card">
 
@@ -644,7 +626,7 @@ document.querySelector('#app').innerHTML = `
 
       </div>
 
-      <section id="timeVaultHistory" class="my-vaults" hidden>
+      <section class="protocol-how protocol-how-time"><div class="protocol-how-head"><span>01 // PROTOCOL FLOW</span><h2>How Time Vault works.</h2><code>DEFINE &rarr; FUND &rarr; WAIT &rarr; SPEND</code></div><div class="protocol-how-grid"><div><b>001</b><strong>DEFINE</strong><p>Choose how long the KAS remains locked.</p></div><div><b>002</b><strong>FUND</strong><p>Commit KAS to the generated covenant output.</p></div><div><b>003</b><strong>WAIT</strong><p>Wait until the time condition has been reached.</p></div><div><b>004</b><strong>SPEND</strong><p>The owner can redeem after the condition is satisfied.</p></div></div></section><section id="timeVaultHistory" class="my-vaults" hidden>
         <div class="my-vaults-title">CREATED TIME VAULTS</div>
         <div id="timeVaultList"></div>
       </section>
@@ -656,9 +638,9 @@ document.querySelector('#app').innerHTML = `
 
         <div class="secret-tool-intro">
 
-          <div class="eyebrow">SECRET VAULT</div>
+          <div class="eyebrow">02 // LIVE COVENANT // HASHLOCK<br><small>TESTNET-10 // KASWARE REQUIRED</small></div>
 
-          <h1>Know the secret.<br><span>Unlock the KAS.</span></h1>
+          <h1>SECRET<br><span>VAULT.</span></h1>
 
           <p class="tool-lead">
             Lock KAS behind a secret. Anyone who knows the correct secret
@@ -668,25 +650,6 @@ document.querySelector('#app').innerHTML = `
           <div class="tool-condition">
             <span>SPENDING CONDITION</span>
             <code>SECRET &rarr; SPEND</code>
-          </div>
-
-          <div class="tool-how">
-            <span class="tool-mini-label">HOW IT WORKS</span>
-
-            <div class="tool-step">
-              <b>01</b>
-              <p>Choose an amount and a strong secret.</p>
-            </div>
-
-            <div class="tool-step">
-              <b>02</b>
-              <p>KAS is locked by the hash of that secret.</p>
-            </div>
-
-            <div class="tool-step">
-              <b>03</b>
-              <p>The correct secret unlocks the covenant for spending.</p>
-            </div>
           </div>
 
           <div class="secret-security-note">
@@ -964,7 +927,7 @@ document.querySelector('#app').innerHTML = `
 
 
         <div class="dashboard-note">
-          <span>NON-CUSTODIAL</span>
+          <span>TESTNET-10</span>
 
           <p>
             KAS Logic helps you interact with your vaults.
@@ -974,6 +937,129 @@ document.querySelector('#app').innerHTML = `
         </div>
 
       </div>
+
+    </section>
+    <section id="view-faq" class="app-view">
+
+      <section class="faq-hero">
+        <div class="eyebrow">PROTOCOL FAQ</div>
+        <h1>Questions.<br><span>Answered.</span></h1>
+        <p>How KAS Logic, covenants, custody, recovery and the current Testnet environment work.</p>
+        <div class="faq-status">
+          <span>TESTNET-10</span>
+          <span>KASWARE REQUIRED</span>
+          <span>EXPERIMENTAL</span>
+        </div>
+      </section>
+
+      <section class="faq-section">
+        <div class="faq-category">01 // COVENANTS</div>
+
+        <details class="faq-item">
+          <summary>What is a covenant?</summary>
+          <p>A covenant places conditions on how KAS can be spent. A transaction must satisfy those conditions before the network accepts the spend.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How is a KAS Logic vault created?</summary>
+          <p>KAS Logic constructs the covenant and its spending condition, then helps fund the resulting covenant-controlled output using your connected wallet.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Who enforces the covenant?</summary>
+          <p>Kaspa enforces the spending condition. KAS Logic helps construct and interact with the covenant, but it does not decide whether a spend is valid.</p>
+        </details>
+      </section>
+
+      <section class="faq-section">
+        <div class="faq-category">02 // SECURITY + CUSTODY</div>
+
+        <details class="faq-item">
+          <summary>Why is KAS Logic non-custodial?</summary>
+          <p>KAS Logic does not take custody of the funds. Once funded, the KAS is controlled by the covenant conditions rather than by an account operated by KAS Logic.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can KAS Logic move my KAS?</summary>
+          <p>KAS Logic cannot simply override the covenant and move the KAS. A valid spend must satisfy the covenant conditions enforced by Kaspa.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What happens if the KAS Logic website disappears?</summary>
+          <p>The vault remains on Kaspa. Keep your Recovery File and the information required to satisfy the covenant so the vault can be reconstructed and redeemed.</p>
+        </details>
+      </section>
+
+      <section class="faq-section">
+        <div class="faq-category">03 // TIME VAULT</div>
+
+        <details class="faq-item">
+          <summary>How does a Time Vault work?</summary>
+          <p>A Time Vault locks KAS behind a time condition and an owner-controlled spending path. The owner can spend only after the required condition has been reached.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can a Time Vault be unlocked early?</summary>
+          <p>No. The owner cannot bypass the time condition through KAS Logic. The required covenant condition must be satisfied before the spend is valid.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>What do I need to recover a Time Vault?</summary>
+          <p>Keep the Recovery File and access to the owner wallet used for the vault. After the time condition is reached, they are used to reconstruct and redeem the vault.</p>
+        </details>
+      </section>
+
+      <section class="faq-section">
+        <div class="faq-category">04 // SECRET VAULT</div>
+
+        <details class="faq-item">
+          <summary>How does a Secret Vault work?</summary>
+          <p>KAS is locked behind the hash of a secret. Providing the matching secret satisfies the hashlock and allows a valid redemption transaction to choose the destination.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does the Recovery File contain my secret?</summary>
+          <p>No. The Secret Vault Recovery File does not contain the plaintext secret. Keep the original secret separately and securely.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Does the secret remain private after redemption?</summary>
+          <p>No. The secret is revealed when it is used for redemption. It should not be reused or treated as permanently private after the vault is spent.</p>
+        </details>
+      </section>
+
+      <section class="faq-section">
+        <div class="faq-category">05 // WALLET + NETWORK</div>
+
+        <details class="faq-item">
+          <summary>Which wallet does KAS Logic currently support?</summary>
+          <p>The current interface requires KasWare for wallet interaction.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Which network does KAS Logic use?</summary>
+          <p>KAS Logic currently runs on Kaspa Testnet-10. The current interface is not intended for mainnet KAS.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Where is my vault information stored?</summary>
+          <p>KAS Logic keeps useful vault information locally in your browser. The KAS and covenant themselves remain on Kaspa. Keep your Recovery File in case local browser data is cleared or you move to another device.</p>
+        </details>
+      </section>
+
+      <section class="faq-section faq-risk">
+        <div class="faq-category">06 // STATUS + RISK</div>
+
+        <details class="faq-item">
+          <summary>Is KAS Logic production-ready?</summary>
+          <p>No. KAS Logic is currently experimental Testnet software.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Has KAS Logic been audited?</summary>
+          <p>No independent security audit is currently claimed. Use the project as experimental Testnet software and do not treat it as audited production infrastructure.</p>
+        </details>
+      </section>
 
     </section>
   </main>
