@@ -1,3 +1,4 @@
+﻿import { buildMultisigVaultBytecode } from './multisig-bytecode.js'
 window.showKasNotification = function showKasNotification(title, message, type = 'success') {
   document.querySelector('.kas-notification')?.remove()
 
@@ -49,6 +50,7 @@ document.querySelector('#app').innerHTML = `
         <button class="nav-link" data-view="learn">How It Works</button>
         <button class="nav-link" data-view="time">Time Vault</button>
         <button class="nav-link" data-view="secret">Secret Vault</button>
+        <button class="nav-link" data-view="multisig">Multisig Vault</button>
         <button class="nav-link" data-view="vaults">My Vaults</button>
         <button class="nav-link" data-view="faq">FAQ</button>
       </div>
@@ -784,7 +786,142 @@ document.querySelector('#app').innerHTML = `
       </div>
 
     </section>
-    <section id="view-vaults" class="app-view">
+    <section id="view-multisig" class="app-view">
+
+  <div class="tool-layout">
+
+    <div class="tool-intro">
+      <div class="eyebrow">
+        03 // LIVE COVENANT // MULTISIG
+        <br><small>TESTNET-10 // KASWARE REQUIRED</small>
+      </div>
+
+      <h1>MULTISIG<br><span>VAULT.</span></h1>
+
+      <p class="tool-lead">
+        Secure your KAS with three authorized keys.
+        Any two must approve a transaction before funds can move.
+      </p>
+
+      <div class="tool-condition">
+        <span>SPENDING CONDITION</span>
+        <code>2 OF 3 SIGNATURES &rarr; SPEND</code>
+      </div>
+    </div>
+
+    <section class="vault-card tool-action-card">
+
+      <div class="card-header">
+        <div>
+          <span class="step">CREATE</span>
+          <h2>Multisig Vault</h2>
+        </div>
+        <div class="lock">2 OF 3</div>
+      </div>
+
+      <p class="tool-card-description">
+        Configure three authorized public keys and the amount to lock.
+      </p>
+
+      <label>Amount</label>
+      <div class="input-box">
+        <input id="multisigAmount" type="number" min="0" step="any" placeholder="0.00">
+        <span>KAS</span>
+      </div>
+
+      <label>Public Key A</label>
+      <div class="input-box">
+        <input id="multisigKeyA" type="text" placeholder="Public key A">
+      </div>
+
+      <label>Public Key B</label>
+      <div class="input-box">
+        <input id="multisigKeyB" type="text" placeholder="Public key B">
+      </div>
+
+      <label>Public Key C</label>
+      <div class="input-box">
+        <input id="multisigKeyC" type="text" placeholder="Public key C">
+      </div>
+
+      <button class="create" id="createMultisigVault" disabled>
+        Create Multisig Vault
+      </button>
+
+      <p class="notice">
+        Two authorized signatures are required to redeem.
+        KAS Logic never holds your private keys.
+      </p>
+
+    </section>
+
+  </div>
+
+  <section class="vault-card tool-action-card" style="margin-top:32px">
+
+    <div class="card-header">
+      <div>
+        <span class="step">REDEEM</span>
+        <h2>Redeem Multisig Vault</h2>
+      </div>
+      <div class="lock">2 OF 3</div>
+    </div>
+
+    <p class="tool-card-description">
+      Two authorized wallets must sign the same transaction
+      before the funds can be released.
+    </p>
+
+    <label>Select Vault</label>
+    <select id="multisigRedeemVault" class="input-box">
+      <option value="">Select a Multisig Vault</option>
+    </select>
+
+    <label>Destination Address</label>
+    <div class="input-box">
+      <input
+        id="multisigRedeemDestination"
+        type="text"
+        placeholder="kaspatest:..."
+      >
+    </div>
+
+    <label>Signing Pair</label>
+    <select id="multisigRedeemPair" class="input-box">
+      <option value="AB">Wallet A + Wallet B</option>
+      <option value="AC">Wallet A + Wallet C</option>
+      <option value="BC">Wallet B + Wallet C</option>
+    </select>
+
+    <div class="tool-condition">
+      <span>SIGNING STATUS</span>
+      <code id="multisigSigningStatus">AWAITING SIGNATURES</code>
+    </div>
+
+    <button class="create" id="multisigStartRedeem" disabled>
+      Prepare Redemption
+    </button>
+
+    <button class="create" id="multisigSignFirst" disabled>
+      Sign with First Wallet
+    </button>
+
+    <button class="create" id="multisigSignSecond" disabled>
+      Sign with Second Wallet
+    </button>
+
+    <button class="create" id="multisigBroadcast" disabled>
+      Broadcast Redemption
+    </button>
+
+    <p class="notice">
+      Both signatures must authorize the same transaction.
+      KasLogic never requests or stores your private keys.
+    </p>
+
+  </section>
+</section>
+<section id="view-vaults" class="app-view">
 
       <div class="vault-dashboard">
 
@@ -1721,6 +1858,914 @@ timeButtons.forEach(button => {
 
 customValue.addEventListener('input', updateCustomUnlock)
 customUnit.addEventListener('change', updateCustomUnlock)
+document.querySelector('#createMultisigVault')?.addEventListener('click', async () => {
+  const button = document.querySelector('#createMultisigVault')
+
+  try {
+    button.disabled = true
+    button.textContent = 'Creating...'
+
+    const amount = Number(document.querySelector('#multisigAmount').value)
+    const keyA = document.querySelector('#multisigKeyA').value.trim()
+    const keyB = document.querySelector('#multisigKeyB').value.trim()
+    const keyC = document.querySelector('#multisigKeyC').value.trim()
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new Error('Enter a valid KAS amount')
+    }
+
+    if (!window.kasware) {
+      throw new Error('KasWare wallet not detected')
+    }
+
+    const accounts = await window.kasware.requestAccounts()
+    if (!accounts?.length) {
+      throw new Error('Connect your KasWare wallet first')
+    }
+
+    const redeemScript = buildMultisigVaultBytecode(keyA, keyB, keyC)
+
+    const scriptPublicKey = payToScriptHashScript(redeemScript)
+    const vaultAddress =
+      addressFromScriptPublicKey(scriptPublicKey, 'testnet-10').toString()
+
+    const sompi = BigInt(Math.round(amount * 100_000_000))
+
+    if (sompi <= 0n || !Number.isSafeInteger(Number(sompi))) {
+      throw new Error('Invalid amount')
+    }
+
+    const normalizeKey = key => {
+      const value = key.toLowerCase()
+      return value.length === 66 ? value.slice(2) : value
+    }
+
+    const normalizedKeys = [
+      normalizeKey(keyA),
+      normalizeKey(keyB),
+      normalizeKey(keyC)
+    ]
+
+    const txResult = await window.kasware.sendKaspa(
+      vaultAddress,
+      Number(sompi)
+    )
+
+    let createTxid =
+      txResult?.id ??
+      txResult?.transactionId ??
+      txResult?.txid ??
+      null
+
+    if (!createTxid && typeof txResult === 'string') {
+      try {
+        const parsed = JSON.parse(txResult)
+        createTxid =
+          parsed?.id ??
+          parsed?.transactionId ??
+          parsed?.txid ??
+          null
+      } catch {
+        createTxid = txResult
+      }
+    }
+
+    const vaults = JSON.parse(
+      localStorage.getItem('kasLogicMultisigVaults') || '[]'
+    )
+
+    vaults.push({
+      type: 'multisig-2of3',
+      version: 1,
+      network: 'testnet-10',
+      vaultAddress,
+      senderAddress: accounts[0],
+      publicKeys: normalizedKeys,
+      amount: sompi.toString(),
+      createTxid,
+      redeemScriptHex: Array.from(
+        redeemScript,
+        b => b.toString(16).padStart(2, '0')
+      ).join(''),
+      status: 'active'
+    })
+
+    localStorage.setItem(
+      'kasLogicMultisigVaults',
+      JSON.stringify(vaults)
+    )
+
+    button.textContent = 'Vault Created ✓'
+
+    showKasNotification(
+      'Multisig Vault Created',
+      'Your 2-of-3 Multisig Vault was funded successfully.',
+      'success'
+    )
+
+    console.log('MULTISIG VAULT:', vaultAddress)
+    console.log('FUNDING TX:', createTxid)
+
+  } catch (error) {
+    console.error('Multisig creation failed:', error)
+
+    showKasNotification(
+      'Multisig Error',
+      error.message || String(error),
+      'error'
+    )
+
+    button.textContent = 'Create Multisig Vault'
+  } finally {
+    if (button.textContent !== 'Vault Created ✓') {
+      button.disabled = false
+    }
+  }
+})
+
+document.querySelector('#createMultisigVault')?.removeAttribute('disabled')
+
+document.querySelector('#multisigSignSecond')
+  ?.addEventListener('click', async () => {
+    const button = document.querySelector('#multisigSignSecond')
+    const status = document.querySelector('#multisigSigningStatus')
+
+    try {
+      button.disabled = true
+      status.textContent = 'WAITING FOR SECOND SIGNATURE'
+
+      const session = JSON.parse(
+        localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+      )
+
+      const first = JSON.parse(
+        localStorage.getItem('multisigSigFirstV1') || 'null'
+      )
+
+      if (!session || !first) {
+        throw new Error('First signature or transaction is missing')
+      }
+
+      if (
+        first.unsignedTxJson !== session.unsignedTxJson ||
+        first.fundingTxid !== session.fundingTxid ||
+        first.signer !== session.pair[0] ||
+        !/^[0-9a-fA-F]{130}$/.test(first.signatureHex || '')
+      ) {
+        throw new Error('First signature does not match this transaction')
+      }
+
+      if (!window.kasware) {
+        throw new Error('KasWare wallet not detected')
+      }
+
+      const accounts = await window.kasware.requestAccounts()
+
+      if (!accounts?.length) {
+        throw new Error('Connect your KasWare wallet')
+      }
+
+      const connectedKey = (
+        await window.kasware.getPublicKey()
+      ).toLowerCase()
+
+      if (!/^(02|03)[0-9a-f]{64}$/.test(connectedKey)) {
+        throw new Error('Invalid KasWare public key')
+      }
+
+      const signer = session.pair[1]
+      const signerIndex = 'ABC'.indexOf(signer)
+      const expectedKey = session.publicKeys[signerIndex]
+
+      if (connectedKey.slice(2) !== expectedKey) {
+        throw new Error(
+          `Wrong wallet connected. Please connect Wallet ${signer}`
+        )
+      }
+
+      if (first.publicKey === expectedKey) {
+        throw new Error('Both signatures cannot use the same wallet')
+      }
+
+      const signedJson = await window.kasware.signPskt({
+        txJsonString: session.unsignedTxJson,
+        options: {
+          signInputs: [{ index: 0, sighashType: 1 }]
+        }
+      })
+
+      const signed = typeof signedJson === 'string'
+        ? JSON.parse(signedJson)
+        : signedJson
+
+      const pushedSigHex = signed.inputs?.[0]?.signatureScript
+
+      if (!/^41[0-9a-fA-F]{130}$/.test(pushedSigHex || '')) {
+        throw new Error('Unexpected KasWare signature format')
+      }
+
+      localStorage.setItem(
+        'multisigSigSecondV1',
+        JSON.stringify({
+          signer,
+          publicKey: expectedKey,
+          signatureHex: pushedSigHex.slice(2),
+          fundingTxid: session.fundingTxid,
+          unsignedTxJson: session.unsignedTxJson
+        })
+      )
+
+      status.textContent = 'TWO SIGNATURES SAVED — READY FOR VERIFICATION'
+
+      // Broadcast remains disabled until final validation is implemented.
+      document.querySelector('#multisigBroadcast').disabled = true
+
+      console.log('MULTISIG SECOND SIGNATURE SAVED:', signer)
+
+      showKasNotification(
+        'Second Signature Saved',
+        `Wallet ${signer} signed. Both signatures are now collected.`,
+        'success'
+      )
+
+    } catch (error) {
+      console.error('Multisig second signing failed:', error)
+      status.textContent = 'SECOND SIGNATURE FAILED'
+
+      showKasNotification(
+        'Signing Error',
+        error.message || String(error),
+        'error'
+      )
+
+      button.disabled = false
+    }
+  })
+
+
+function restoreMultisigSigningSession() {
+  const status = document.querySelector('#multisigSigningStatus')
+  const firstButton = document.querySelector('#multisigSignFirst')
+  const secondButton = document.querySelector('#multisigSignSecond')
+  const broadcastButton = document.querySelector('#multisigBroadcast')
+
+  if (!status || !firstButton || !secondButton || !broadcastButton) {
+    return
+  }
+
+  firstButton.disabled = true
+  secondButton.disabled = true
+  broadcastButton.disabled = true
+
+  try {
+    const session = JSON.parse(
+      localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+    )
+
+    if (!session) {
+      status.textContent = 'AWAITING SIGNATURES'
+      return
+    }
+
+    const first = JSON.parse(
+      localStorage.getItem('multisigSigFirstV1') || 'null'
+    )
+
+    const second = JSON.parse(
+      localStorage.getItem('multisigSigSecondV1') || 'null'
+    )
+
+    // Restore the original transaction details.
+    const destination = document.querySelector(
+      '#multisigRedeemDestination'
+    )
+
+    const pair = document.querySelector('#multisigRedeemPair')
+
+    if (destination) destination.value = session.destination
+    if (pair) pair.value = session.pair
+
+    // The vault selector is populated asynchronously.
+    // We will restore its selection separately.
+    if (second) {
+      status.textContent = 'TWO SIGNATURES SAVED — READY FOR VERIFICATION'
+      return
+    }
+
+    if (first) {
+      if (
+        first.unsignedTxJson !== session.unsignedTxJson ||
+        first.fundingTxid !== session.fundingTxid ||
+        first.signer !== session.pair[0]
+      ) {
+        throw new Error('Saved first signature does not match session')
+      }
+
+      status.textContent =
+        `WALLET ${first.signer} SIGNED — SECOND SIGNATURE REQUIRED`
+
+      secondButton.disabled = false
+      return
+    }
+
+    status.textContent = 'READY FOR FIRST SIGNATURE'
+    firstButton.disabled = false
+
+  } catch (error) {
+    console.error('Multisig session restoration failed:', error)
+    status.textContent = 'SESSION RESTORATION FAILED'
+  }
+}
+
+restoreMultisigSigningSession()
+
+
+
+async function submitMultisigRedemption() {
+  const session = JSON.parse(
+    localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+  )
+  const first = JSON.parse(
+    localStorage.getItem('multisigSigFirstV1') || 'null'
+  )
+  const second = JSON.parse(
+    localStorage.getItem('multisigSigSecondV1') || 'null'
+  )
+
+  if (!session || !first || !second) {
+    throw new Error('Incomplete Multisig signing session')
+  }
+
+  if (!window.kaspaRpc) {
+    throw new Error('Kaspa RPC is not connected')
+  }
+
+  if (session.pair !== 'AB') {
+    throw new Error('Only Wallet A + Wallet B is supported')
+  }
+
+  for (const [record, signer, index] of [
+    [first, 'A', 0],
+    [second, 'B', 1]
+  ]) {
+    if (
+      record.signer !== signer ||
+      record.publicKey !== session.publicKeys[index] ||
+      record.unsignedTxJson !== session.unsignedTxJson ||
+      record.fundingTxid !== session.fundingTxid ||
+      !/^[0-9a-fA-F]{130}$/.test(record.signatureHex || '')
+    ) {
+      throw new Error(`Invalid signature record for Wallet ${signer}`)
+    }
+  }
+
+  const vaults = JSON.parse(
+    localStorage.getItem('kasLogicMultisigVaults') || '[]'
+  )
+
+  const vault = vaults.find(v =>
+    v.vaultAddress === session.vaultAddress &&
+    v.network === 'testnet-10'
+  )
+
+  if (!vault) throw new Error('Multisig Vault not found')
+
+  if (
+    vault.redeemScriptHex !== session.redeemScriptHex ||
+    JSON.stringify(vault.publicKeys) !==
+      JSON.stringify(session.publicKeys)
+  ) {
+    throw new Error('Vault contract mismatch')
+  }
+
+  const bytes = hex => {
+    if (!/^(?:[0-9a-fA-F]{2})+$/.test(hex || '')) {
+      throw new Error('Invalid hexadecimal data')
+    }
+
+    return Uint8Array.from(
+      hex.match(/.{2}/g),
+      value => parseInt(value, 16)
+    )
+  }
+
+  const redeemScript = bytes(session.redeemScriptHex)
+  const expectedScript =
+    buildMultisigVaultBytecode(...session.publicKeys)
+
+  if (
+    redeemScript.length !== 295 ||
+    Array.from(redeemScript).join(',') !==
+      Array.from(expectedScript).join(',')
+  ) {
+    throw new Error('Multisig redeem script verification failed')
+  }
+
+  const expectedAddress = addressFromScriptPublicKey(
+    payToScriptHashScript(redeemScript),
+    'testnet-10'
+  ).toString()
+
+  if (expectedAddress !== session.vaultAddress) {
+    throw new Error('Vault address verification failed')
+  }
+
+  const expectedDestination =
+    'kaspatest:qrmuvfzrgulnv89g2pra9np5smuuwlz5ltyxg5t40kt0lmsm9hx6uf0ufz0lr'
+
+  if (session.destination !== expectedDestination) {
+    throw new Error('Unexpected destination address')
+  }
+
+  const result = await window.kaspaRpc.getUtxosByAddresses([
+    session.vaultAddress
+  ])
+
+  const utxo = result.entries?.find(u =>
+    u.outpoint.transactionId === session.fundingTxid &&
+    Number(u.outpoint.index) === Number(session.fundingIndex)
+  )
+
+  if (!utxo) {
+    throw new Error('Funding UTXO is no longer available')
+  }
+
+  const inputAmount = BigInt(utxo.amount)
+  const outputAmount = BigInt(session.outputSompi)
+  const fee = inputAmount - outputAmount
+
+  if (
+    inputAmount !== 1_000_000_000n ||
+    outputAmount !== 990_000_000n ||
+    fee !== 10_000_000n ||
+    inputAmount !== BigInt(session.amountSompi)
+  ) {
+    throw new Error('Unexpected transaction amounts')
+  }
+
+  const actionScript = new Uint8Array([
+    0x41, ...bytes(first.signatureHex),
+    0x41, ...bytes(second.signatureHex),
+    0x04, 0x5c, 0x4b, 0xaa, 0x54
+  ])
+
+  const signatureScript =
+    window.payToScriptHashSignatureScript(
+      redeemScript,
+      actionScript
+    )
+
+  const input = new window.TransactionInput({
+    previousOutpoint: utxo.outpoint,
+    signatureScript,
+    sequence: 0n,
+    sigOpCount: 0,
+    computeBudget: 30,
+    utxo
+  })
+
+  const output = new window.TransactionOutput(
+    outputAmount,
+    window.payToAddressScript(session.destination)
+  )
+
+  const tx = new window.Transaction({
+    version: 1,
+    inputs: [input],
+    outputs: [output],
+    lockTime: 0n,
+    subnetworkId: '0000000000000000000000000000000000000000',
+    gas: 0n,
+    payload: ''
+  })
+
+  tx.finalize()
+
+  const approved = window.confirm(
+    'BROADCAST MULTISIG REDEMPTION?\n\n' +
+    'Network: Kaspa Testnet-10\n' +
+    'Signers: Wallet A + Wallet B\n' +
+    'Input: 10 tKAS\n' +
+    'Receive: 9.9 tKAS\n' +
+    'Fee: 0.1 tKAS\n\n' +
+    'Destination:\n' + session.destination
+  )
+
+  if (!approved) return null
+
+  const submitted = await window.kaspaRpc.submitTransaction({
+    transaction: tx,
+    allowOrphan: false
+  })
+
+  console.log(
+    'MULTISIG REDEMPTION BROADCASTED:',
+    submitted.transactionId
+  )
+
+  localStorage.setItem(
+    'multisigLastRedeemTxid',
+    submitted.transactionId
+  )
+
+  return submitted.transactionId
+}
+
+document.querySelector('#multisigBroadcast')
+  ?.addEventListener('click', async () => {
+    const button = document.querySelector('#multisigBroadcast')
+    const status = document.querySelector('#multisigSigningStatus')
+
+    button.disabled = true
+    status.textContent = 'VALIDATING TRANSACTION'
+
+    try {
+      const txid = await submitMultisigRedemption()
+
+      if (!txid) {
+        status.textContent = 'BROADCAST CANCELLED'
+        button.disabled = false
+        return
+      }
+
+      status.textContent = 'TRANSACTION SUBMITTED'
+
+      showKasNotification(
+        'Multisig Redemption Submitted',
+        `Transaction: ${txid}`,
+        'success'
+      )
+
+    } catch (error) {
+      console.error('Multisig broadcast failed:', error)
+      status.textContent = 'BROADCAST FAILED'
+
+      showKasNotification(
+        'Broadcast Error',
+        error.message || String(error),
+        'error'
+      )
+
+      button.disabled = false
+    }
+  })
+
+function enableMultisigBroadcastIfReady() {
+  const button = document.querySelector('#multisigBroadcast')
+  const status = document.querySelector('#multisigSigningStatus')
+
+  if (!button || !status) return
+
+  const session = JSON.parse(
+    localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+  )
+  const first = JSON.parse(
+    localStorage.getItem('multisigSigFirstV1') || 'null'
+  )
+  const second = JSON.parse(
+    localStorage.getItem('multisigSigSecondV1') || 'null'
+  )
+
+  if (
+    session?.pair === 'AB' &&
+    first?.signer === 'A' &&
+    second?.signer === 'B' &&
+    first.unsignedTxJson === session.unsignedTxJson &&
+    second.unsignedTxJson === session.unsignedTxJson
+  ) {
+    button.disabled = false
+    status.textContent = 'TWO SIGNATURES SAVED — READY TO BROADCAST'
+  }
+}
+
+enableMultisigBroadcastIfReady()
+
+document.querySelector('#multisigSignFirst')
+  ?.addEventListener('click', async () => {
+    const button = document.querySelector('#multisigSignFirst')
+    const status = document.querySelector('#multisigSigningStatus')
+
+    try {
+      button.disabled = true
+      status.textContent = 'WAITING FOR FIRST SIGNATURE'
+
+      const session = JSON.parse(
+        localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+      )
+
+      if (!session) {
+        throw new Error('Prepare the Multisig transaction first')
+      }
+
+      if (!window.kasware) {
+        throw new Error('KasWare wallet not detected')
+      }
+
+      const accounts = await window.kasware.requestAccounts()
+      if (!accounts?.length) {
+        throw new Error('Connect your KasWare wallet')
+      }
+
+      const connectedKey = (
+        await window.kasware.getPublicKey()
+      ).toLowerCase()
+
+      if (!/^(02|03)[0-9a-f]{64}$/.test(connectedKey)) {
+        throw new Error('Invalid KasWare public key')
+      }
+
+      const signer = session.pair[0]
+      const signerIndex = 'ABC'.indexOf(signer)
+      const expectedKey = session.publicKeys[signerIndex]
+
+      if (connectedKey.slice(2) !== expectedKey) {
+        throw new Error(
+          `Wrong wallet connected. Please connect Wallet ${signer}`
+        )
+      }
+
+      const signedJson = await window.kasware.signPskt({
+        txJsonString: session.unsignedTxJson,
+        options: {
+          signInputs: [{ index: 0, sighashType: 1 }]
+        }
+      })
+
+      const signed = typeof signedJson === 'string'
+        ? JSON.parse(signedJson)
+        : signedJson
+
+      const pushedSigHex = signed.inputs?.[0]?.signatureScript
+
+      if (!/^41[0-9a-fA-F]{130}$/.test(pushedSigHex || '')) {
+        throw new Error('Unexpected KasWare signature format')
+      }
+
+      const sigHex = pushedSigHex.slice(2)
+
+      localStorage.setItem(
+        'multisigSigFirstV1',
+        JSON.stringify({
+          signer,
+          publicKey: expectedKey,
+          signatureHex: sigHex,
+          fundingTxid: session.fundingTxid,
+          unsignedTxJson: session.unsignedTxJson
+        })
+      )
+
+      status.textContent = `WALLET ${signer} SIGNED — SECOND SIGNATURE REQUIRED`
+
+      document.querySelector('#multisigSignSecond').disabled = false
+
+      console.log('MULTISIG FIRST SIGNATURE SAVED:', signer)
+
+      showKasNotification(
+        'First Signature Saved',
+        `Wallet ${signer} signed successfully. Connect the second wallet.`,
+        'success'
+      )
+
+    } catch (error) {
+      console.error('Multisig first signing failed:', error)
+      status.textContent = 'FIRST SIGNATURE FAILED'
+
+      showKasNotification(
+        'Signing Error',
+        error.message || String(error),
+        'error'
+      )
+
+      button.disabled = false
+    }
+  })
+
+
+document.querySelector('#multisigStartRedeem')
+  ?.addEventListener('click', async () => {
+    const button = document.querySelector('#multisigStartRedeem')
+    const status = document.querySelector('#multisigSigningStatus')
+
+    try {
+      button.disabled = true
+      status.textContent = 'PREPARING TRANSACTION'
+
+      if (!window.kaspaRpc) {
+        throw new Error('Kaspa RPC is not connected')
+      }
+
+      const vaultAddress =
+        document.querySelector('#multisigRedeemVault').value
+
+      const destination =
+        document.querySelector('#multisigRedeemDestination').value.trim()
+
+      const pair =
+        document.querySelector('#multisigRedeemPair').value
+
+      if (!vaultAddress) throw new Error('Select a Multisig Vault')
+      if (!destination.startsWith('kaspatest:')) {
+        throw new Error('Enter a Testnet destination address')
+      }
+      if (!['AB', 'AC', 'BC'].includes(pair)) {
+        throw new Error('Invalid signing pair')
+      }
+
+      const vaults = JSON.parse(
+        localStorage.getItem('kasLogicMultisigVaults') || '[]'
+      )
+
+      const vault = vaults.find(v =>
+        v.vaultAddress === vaultAddress &&
+        v.network === 'testnet-10'
+      )
+
+      if (!vault) throw new Error('Multisig Vault not found')
+
+      const redeemScript = hexBytes(vault.redeemScriptHex)
+
+      if (redeemScript.length !== 295) {
+        throw new Error('Invalid Multisig redeem script')
+      }
+
+      const expectedScript =
+        buildMultisigVaultBytecode(...vault.publicKeys)
+
+      if (
+        Array.from(redeemScript).join(',') !==
+        Array.from(expectedScript).join(',')
+      ) {
+        throw new Error('Stored redeem script does not match public keys')
+      }
+
+      const expectedAddress =
+        addressFromScriptPublicKey(
+          payToScriptHashScript(redeemScript),
+          'testnet-10'
+        ).toString()
+
+      if (expectedAddress !== vaultAddress) {
+        throw new Error('Multisig vault address verification failed')
+      }
+
+      const utxos = await window.kaspaRpc.getUtxosByAddresses([
+        vaultAddress
+      ])
+
+      if (utxos.entries?.length !== 1) {
+        throw new Error(
+          'Expected exactly one vault UTXO for this test'
+        )
+      }
+
+      const utxo = utxos.entries[0]
+      const fee = 10_000_000n
+      const outputAmount = BigInt(utxo.amount) - fee
+
+      if (outputAmount <= 0n) {
+        throw new Error('Vault balance is too small')
+      }
+
+      const output = new window.TransactionOutput(
+        outputAmount,
+        window.payToAddressScript(destination)
+      )
+
+      const input = new window.TransactionInput({
+        previousOutpoint: utxo.outpoint,
+        signatureScript: new Uint8Array(),
+        sequence: 0n,
+        sigOpCount: 0,
+        computeBudget: 30,
+        utxo
+      })
+
+      const unsignedTx = new window.Transaction({
+        version: 1,
+        inputs: [input],
+        outputs: [output],
+        lockTime: 0n,
+        subnetworkId: '0000000000000000000000000000000000000000',
+        gas: 0n,
+        payload: ''
+      })
+
+      unsignedTx.finalize()
+
+      const session = {
+        vaultAddress,
+        destination,
+        pair,
+        publicKeys: vault.publicKeys,
+        redeemScriptHex: vault.redeemScriptHex,
+        fundingTxid: utxo.outpoint.transactionId,
+        fundingIndex: utxo.outpoint.index,
+        amountSompi: String(utxo.amount),
+        outputSompi: String(outputAmount),
+        unsignedTxJson: unsignedTx.serializeToSafeJSON()
+      }
+
+      localStorage.setItem(
+        'multisigUnsignedRedeemV1',
+        JSON.stringify(session)
+      )
+
+      localStorage.removeItem('multisigSigFirstV1')
+      localStorage.removeItem('multisigSigSecondV1')
+
+      status.textContent = 'READY FOR FIRST SIGNATURE'
+
+      document.querySelector('#multisigSignFirst').disabled = false
+      document.querySelector('#multisigSignSecond').disabled = true
+      document.querySelector('#multisigBroadcast').disabled = true
+
+      showKasNotification(
+        'Transaction Prepared',
+        'Unsigned Multisig transaction ready for the first wallet.',
+        'success'
+      )
+
+      console.log('MULTISIG PREPARED:', {
+        vaultAddress,
+        destination,
+        pair,
+        fundingTxid: session.fundingTxid,
+        outputKAS: Number(outputAmount) / 1e8
+      })
+
+    } catch (error) {
+      console.error('Multisig preparation failed:', error)
+      status.textContent = 'PREPARATION FAILED'
+
+      showKasNotification(
+        'Multisig Error',
+        error.message || String(error),
+        'error'
+      )
+
+      button.disabled = false
+    }
+  })
+
+
+async function refreshMultisigVaultSelector() {
+  const select = document.querySelector('#multisigRedeemVault')
+  const prepareButton = document.querySelector('#multisigStartRedeem')
+
+  if (!select) return
+
+  select.innerHTML = '<option value="">Select a Multisig Vault</option>'
+  prepareButton.disabled = true
+
+  const vaults = JSON.parse(
+    localStorage.getItem('kasLogicMultisigVaults') || '[]'
+  )
+
+  for (const vault of vaults) {
+    if (vault.network !== 'testnet-10') continue
+
+    let balance = 0n
+
+    try {
+      if (window.kaspaRpc) {
+        const result = await window.kaspaRpc.getUtxosByAddresses([
+          vault.vaultAddress
+        ])
+
+        balance = (result.entries || []).reduce(
+          (sum, entry) => sum + BigInt(entry.amount),
+          0n
+        )
+      }
+    } catch (error) {
+      console.warn('Could not fetch Multisig balance:', error)
+      continue
+    }
+
+    if (balance <= 0n) continue
+
+    const option = document.createElement('option')
+    option.value = vault.vaultAddress
+    option.textContent =
+      `${vault.vaultAddress.slice(0, 22)}... — ${Number(balance) / 1e8} tKAS`
+
+    select.appendChild(option)
+  }
+}
+
+document.querySelector('#multisigRedeemVault')
+  ?.addEventListener('change', () => {
+    const select = document.querySelector('#multisigRedeemVault')
+    const button = document.querySelector('#multisigStartRedeem')
+
+    button.disabled = !select.value
+  })
+
+document.querySelector('[data-view="multisig"]')
+  ?.addEventListener('click', () => {
+    refreshMultisigVaultSelector()
+  })
+
 document.querySelector('#createVault').addEventListener('click', async () => {
   try {
     const amount = document.querySelector('#amount').value
@@ -2944,6 +3989,17 @@ async function startKasLogic() {
 }
 
 window.addEventListener('kaspa-daa-ready', startKasLogic, { once: true })
+
+
+
+
+
+
+
+
+
+
+
 
 
 
