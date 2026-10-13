@@ -1,4 +1,4 @@
-﻿import { buildMultisigVaultBytecode } from './multisig-bytecode.js'
+import { buildMultisigVaultBytecode } from './multisig-bytecode.js'
 window.showKasNotification = function showKasNotification(title, message, type = 'success') {
   document.querySelector('.kas-notification')?.remove()
 
@@ -131,7 +131,7 @@ document.querySelector('#app').innerHTML = `
           </div>
 
           <p>
-            Time and secret-based spending conditions, available on Testnet-10.
+            Time, secret and multisig spending conditions, available on Testnet-10.
           </p>
         </div>
 
@@ -195,6 +195,36 @@ document.querySelector('#app').innerHTML = `
 
             <div class="option-link">
               Create Secret Vault &rarr;
+            </div>
+          </button>
+
+          <button class="covenant-option" data-open-view="multisig">
+            <div class="option-top">
+              <span class="option-number">03</span>
+              <span class="option-status">LIVE</span>
+            </div>
+
+            <div class="option-type">03 // MULTISIG COVENANT // ACTIVE</div>
+
+            <h3>Multisig Vault</h3>
+
+            <p class="option-description">
+              Secure your KAS with three authorized keys.
+              Any two must approve a transaction before funds can move.
+            </p>
+
+            <div class="condition-box">
+              <span>CONDITION</span>
+              <code>2 OF 3 SIGNATURES &rarr; SPEND</code>
+            </div>
+
+            <div class="use-cases">
+              <span>USE CASES</span>
+              <p>Shared control &middot; Team funds &middot; Multi-key security</p>
+            </div>
+
+            <div class="option-link">
+              Create Multisig Vault &rarr;
             </div>
           </button>
 
@@ -788,9 +818,9 @@ document.querySelector('#app').innerHTML = `
     </section>
     <section id="view-multisig" class="app-view">
 
-  <div class="tool-layout">
+  <div class="secret-tool-layout">
 
-    <div class="tool-intro">
+    <div class="secret-tool-intro">
       <div class="eyebrow">
         03 // LIVE COVENANT // MULTISIG
         <br><small>TESTNET-10 // KASWARE REQUIRED</small>
@@ -809,7 +839,8 @@ document.querySelector('#app').innerHTML = `
       </div>
     </div>
 
-    <section class="vault-card tool-action-card">
+    <div class="secret-actions">
+<section class="vault-card tool-action-card">
 
       <div class="card-header">
         <div>
@@ -854,10 +885,7 @@ document.querySelector('#app').innerHTML = `
       </p>
 
     </section>
-
-  </div>
-
-  <section class="vault-card tool-action-card" style="margin-top:32px">
+<section class="vault-card tool-action-card multisig-redeem-card">
 
     <div class="card-header">
       <div>
@@ -920,10 +948,13 @@ document.querySelector('#app').innerHTML = `
     </p>
 
   </section>
+  </div>
+  </div>
 </section>
+
 <section id="view-vaults" class="app-view">
 
-      <div class="vault-dashboard">
+<div class="vault-dashboard">
 
         <header class="vault-dashboard-header">
 
@@ -2389,6 +2420,24 @@ document.querySelector('#multisigBroadcast')
       }
 
       status.textContent = 'TRANSACTION SUBMITTED'
+
+      // Clear only the completed Multisig signing session.
+      localStorage.removeItem('multisigUnsignedRedeemV1')
+      localStorage.removeItem('multisigSigFirstV1')
+      localStorage.removeItem('multisigSigSecondV1')
+
+      // Reset the redemption interface.
+      document.querySelector('#multisigRedeemVault').value = ''
+      document.querySelector('#multisigRedeemDestination').value = ''
+      document.querySelector('#multisigRedeemPair').value = 'AB'
+
+      document.querySelector('#multisigStartRedeem').disabled = true
+      document.querySelector('#multisigSignFirst').disabled = true
+      document.querySelector('#multisigSignSecond').disabled = true
+      document.querySelector('#multisigBroadcast').disabled = true
+
+      // Refresh available vaults after submission.
+      refreshMultisigVaultSelector().catch(console.error)
 
       showKasNotification(
         'Multisig Redemption Submitted',

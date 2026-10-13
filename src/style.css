@@ -5361,3 +5361,307 @@ body::before {
   }
 
 }
+
+/* ===== KasLogic Multisig UI Polish v1 ===== */
+
+#view-multisig > .tool-action-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 32px auto 0;
+  box-sizing: border-box;
+}
+
+#view-multisig .tool-action-card .input-box {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#view-multisig .tool-action-card input {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#view-multisig select.input-box {
+  width: 100%;
+  min-height: 48px;
+  color: #eaf5f0;
+  background-color: #111c19;
+  border: 1px solid #365047;
+  border-radius: 10px;
+  padding: 0 14px;
+  box-sizing: border-box;
+}
+
+#view-multisig select.input-box option {
+  background: #111c19;
+  color: #eaf5f0;
+}
+
+#view-multisig #multisigRedeemDestination {
+  width: 100%;
+  min-width: 0;
+}
+
+#view-multisig #multisigStartRedeem,
+#view-multisig #multisigSignFirst,
+#view-multisig #multisigSignSecond,
+#view-multisig #multisigBroadcast {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+}
+
+#view-multisig #multisigSigningStatus {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  #view-multisig > .tool-action-card {
+    max-width: 100%;
+  }
+}
+
+/* ===== End Multisig UI Polish v1 ===== */
+
+/* ===== KasLogic Multisig Layout — matches Secret Vault ===== */
+
+#view-multisig .secret-tool-layout {
+  display: grid;
+  grid-template-columns: 360px minmax(520px, 1fr);
+  gap: clamp(40px, 6vw, 90px);
+  align-items: start;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-top: 85px;
+}
+
+#view-multisig .secret-tool-intro {
+  position: sticky;
+  top: 35px;
+  padding-top: 20px;
+}
+
+#view-multisig .secret-actions {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+
+#view-multisig .secret-actions > .vault-card {
+  width: 100%;
+  max-width: none;
+  margin: 0 !important;
+  padding: 36px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  #view-multisig .secret-tool-layout {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    max-width: 680px;
+    padding-top: 45px;
+  }
+
+  #view-multisig .secret-tool-intro {
+    position: static;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  #view-multisig .secret-actions > .vault-card {
+    padding: 23px;
+  }
+}
+
+/* ===== End Multisig Layout ===== */
+/* KAS LOGIC — Multisig heading alignment */
+#view-multisig .secret-tool-intro h1 {
+  font-size: clamp(3rem, 4.2vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  max-width: 100%;
+}
+
+#view-multisig .secret-tool-intro {
+  min-width: 0;
+}
+
+#view-multisig .secret-tool-layout {
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  #view-multisig .secret-tool-layout {
+    grid-template-columns: 1fr;
+  }
+}
+/* KASLOGIC MULTISIG TYPOGRAPHY FIX V1 */
+
+/* Give the introduction enough room */
+#view-multisig .secret-tool-layout {
+    grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
+    gap: 65px;
+}
+
+/* Match the stronger heading style */
+#view-multisig .secret-tool-intro h1 {
+    font-size: clamp(4rem, 5.4vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: -0.065em;
+    margin-bottom: 28px;
+}
+
+/* Separate description from spending condition */
+#view-multisig .secret-tool-intro .tool-lead {
+    margin-bottom: 42px;
+    line-height: 1.5;
+}
+
+/* Keep spending condition content readable */
+#view-multisig .secret-tool-intro .tool-condition {
+    margin-top: 18px;
+    min-height: 48px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+    line-height: 1.5;
+    white-space: normal;
+}
+
+/* Responsive layout */
+@media (max-width: 1000px) {
+    #view-multisig .secret-tool-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 45px;
+    }
+
+    #view-multisig .secret-tool-intro {
+        position: static;
+    }
+
+    #view-multisig .secret-tool-intro h1 {
+        font-size: clamp(3.5rem, 9vw, 5.5rem);
+    }
+}
+/* KASLOGIC MULTISIG CONDITION FIX V2 */
+
+/* Keep the condition box below the description */
+#view-multisig .secret-tool-intro .tool-condition {
+    margin-top: 32px;
+    padding: 18px 20px;
+    min-height: 64px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: visible;
+}
+
+/* Prevent existing decorative labels from overlapping */
+#view-multisig .tool-condition > * {
+    position: static;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+/* Keep text readable */
+#view-multisig .tool-condition {
+    line-height: 1.6;
+    white-space: normal;
+}
+
+/* KASLOGIC MULTISIG CONDITION FINAL FIX */
+
+/* Arrange the condition text vertically */
+#view-multisig .secret-tool-intro .tool-condition {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 20px;
+}
+
+/* Keep the spending rule on its own line */
+#view-multisig .tool-condition code {
+    display: block;
+    position: static;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+}
+
+/* Move the decorative label into normal document flow */
+#view-multisig .tool-condition::after {
+    content: "// ENFORCED ON KASPA";
+    position: static;
+    transform: none;
+    display: block;
+    margin-top: 4px;
+    font-size: 9px;
+    letter-spacing: .12em;
+    color: rgba(111,255,199,.35);
+}
+
+/* KASLOGIC UNIFIED SPENDING CONDITION V1 */
+
+/* Match Multisig condition layout */
+#view-time .tool-condition,
+#view-secret .tool-condition {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 32px;
+    padding: 18px 20px;
+    min-height: 64px;
+    height: auto;
+    border: 1px solid var(--kl-line-hot);
+    background: linear-gradient(90deg, rgba(111,255,199,.08), transparent);
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+/* Spending condition label */
+#view-time .tool-condition > span,
+#view-secret .tool-condition > span {
+    display: block;
+    position: static;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Green spending rule */
+#view-time .tool-condition code,
+#view-secret .tool-condition code {
+    display: block;
+    position: static;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    margin: 0;
+}
+
+/* Decorative label below the rule */
+#view-time .tool-condition::after,
+#view-secret .tool-condition::after {
+    content: "// ENFORCED ON KASPA";
+    position: static;
+    transform: none;
+    display: block;
+    margin-top: 4px;
+    font-size: 9px;
+    letter-spacing: .12em;
+    color: rgba(111,255,199,.35);
+}
