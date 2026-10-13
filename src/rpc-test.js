@@ -1,4 +1,4 @@
-﻿import init, {
+import init, {
   RpcClient,
   Transaction,
   TransactionInput,
@@ -16,8 +16,17 @@ export {
   addressFromScriptPublicKey
 }
 
+
+// KASLOGIC RPC STATUS V2
+function publishKaspaRpcStatus(state) {
+  window.kaspaRpcStatus = state
+  window.dispatchEvent(new CustomEvent('kaspa-rpc-status', {
+    detail: { state }
+  }))
+}
 async function testKaspaRpc() {
   try {
+    publishKaspaRpcStatus('connecting')
     console.log('Loading Kaspa WASM...')
 
     await init()
@@ -39,6 +48,7 @@ async function testKaspaRpc() {
     console.log('LIVE Virtual DAA:', info.virtualDaaScore)
    
     window.kaspaRpc = rpc
+    publishKaspaRpcStatus('connected')
 
  window.currentKaspaDaa = Number(info.virtualDaaScore)
 
@@ -57,17 +67,20 @@ async function testKaspaRpc() {
     setInterval(async () => {
       try {
         const liveInfo = await rpc.getBlockDagInfo()
+        publishKaspaRpcStatus('connected')
         window.currentKaspaDaa = Number(liveInfo.virtualDaaScore)
 
         window.dispatchEvent(new CustomEvent('kaspa-daa-ready', {
           detail: window.currentKaspaDaa
         }))
       } catch (error) {
+        publishKaspaRpcStatus('disconnected')
         console.error('DAA refresh error:', error)
       }
     }, 5000)
 
   } catch (error) {
+    publishKaspaRpcStatus('disconnected')
     console.error('Kaspa RPC error:', error)
   }
 }

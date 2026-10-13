@@ -47,7 +47,6 @@ document.querySelector('#app').innerHTML = `
 
       <div class="nav-center">
         <button class="nav-link active" data-view="home">Home</button>
-        <button class="nav-link" data-view="learn">How It Works</button>
         <button class="nav-link" data-view="time">Time Vault</button>
         <button class="nav-link" data-view="secret">Secret Vault</button>
         <button class="nav-link" data-view="multisig">Multisig Vault</button>
@@ -55,73 +54,15 @@ document.querySelector('#app').innerHTML = `
         <button class="nav-link" data-view="faq">FAQ</button>
       </div>
 
-      <div class="network">
-        <span class="dot"></span>
-        Testnet 10
-      </div>
+      <div class="network kas-rpc-status" id="kasRpcStatus"
+     data-state="connecting" role="status" aria-live="polite">
+  <span class="dot"></span>
+  <span>Testnet-10</span>
+  <span id="kasRpcStatusText">Connecting</span>
+</div>
     </nav>
 
     <section id="view-home" class="app-view active">
-
-      <section class="v4-hero">
-        <div class="v4-hero-copy">
-          <div class="eyebrow">KAS LOGIC // COVENANT PROTOCOL</div>
-
-          <h1>
-            Make KAS<br>
-            <span>programmable.</span>
-          </h1>
-
-          <p class="v4-lead">
-            Create KAS outputs with conditions enforced by Kaspa.
-            Lock by time, unlock with a secret, and build new ways
-            to control how KAS can be spent.
-          </p>
-
-          <div class="trust-row">
-            <span>TESTNET-10</span>
-            <span>KASWARE REQUIRED</span>
-            <span>NON-CUSTODIAL</span>
-          </div>
-        </div>
-
-        <div class="covenant-visual">
-          <div class="visual-label">COVENANT FLOW</div>
-
-          <div class="flow-node">
-            <span>01</span>
-            <div>
-              <strong>Define</strong>
-              <small>Choose the spending condition</small>
-            </div>
-          </div>
-
-          <div class="flow-line"></div>
-
-          <div class="flow-node">
-            <span>02</span>
-            <div>
-              <strong>Fund</strong>
-              <small>Send KAS to the covenant output</small>
-            </div>
-          </div>
-
-          <div class="flow-line"></div>
-
-          <div class="flow-node active">
-            <span>03</span>
-            <div>
-              <strong>Enforce</strong>
-              <small>Kaspa validates the condition</small>
-            </div>
-          </div>
-
-          <div class="visual-result">
-            KAS moves only when the covenant rules are satisfied.
-          </div>
-        </div>
-      </section>
-
 
       <section class="explore-section">
         <div class="section-heading">
@@ -232,43 +173,67 @@ document.querySelector('#app').innerHTML = `
       </section>
 
 
-      <section class="home-how">
-        <div class="section-heading">
-          <div>
-            <span>THE MODEL</span>
-            <h2>Conditions, not custody.</h2>
+      
+
+
+      
+<section class="v4-hero">
+        <div class="v4-hero-copy">
+          <div class="eyebrow">KAS LOGIC // COVENANT PROTOCOL</div>
+
+          <h1>
+            Make KAS<br>
+            <span>programmable</span>
+          </h1>
+
+          <p class="v4-lead">
+            Create KAS outputs with conditions enforced by Kaspa.
+            Lock by time, unlock with a secret, and build new ways
+            to control how KAS can be spent.
+          </p>
+
+          <div class="trust-row">
+            <span>TESTNET-10</span>
+            <span>KASWARE REQUIRED</span>
+            <span>NON-CUSTODIAL</span>
           </div>
         </div>
 
-        <div class="how-grid">
-          <div>
+        <div class="covenant-visual">
+          <div class="visual-label">COVENANT FLOW</div>
+
+          <div class="flow-node">
             <span>01</span>
-            <strong>You define the rule</strong>
-            <p>
-              Choose what must be true before the KAS can move.
-            </p>
+            <div>
+              <strong>Define</strong>
+              <small>Choose the spending condition</small>
+            </div>
           </div>
 
-          <div>
+          <div class="flow-line"></div>
+
+          <div class="flow-node">
             <span>02</span>
-            <strong>The covenant holds the condition</strong>
-            <p>
-              Your KAS is committed to an output governed by that rule.
-            </p>
+            <div>
+              <strong>Fund</strong>
+              <small>Send KAS to the covenant output</small>
+            </div>
           </div>
 
-          <div>
+          <div class="flow-line"></div>
+
+          <div class="flow-node active">
             <span>03</span>
-            <strong>Kaspa enforces it</strong>
-            <p>
-              A spend is accepted only when the covenant condition is satisfied.
-            </p>
+            <div>
+              <strong>Enforce</strong>
+              <small>Kaspa validates the condition</small>
+            </div>
+          </div>
+
+          <div class="visual-result">
+            KAS moves only when the covenant rules are satisfied.
           </div>
         </div>
-
-        <button class="learn-link nav-link" data-view="learn">
-          Learn how KAS Logic works &rarr;
-        </button>
       </section>
 
 
@@ -281,13 +246,13 @@ document.querySelector('#app').innerHTML = `
     </div>
 
     <div class="lab-stat">
-      <strong>2</strong>
+      <strong>3</strong>
       <span>LIVE COVENANTS</span>
     </div>
   </div>
 
   <p class="lab-intro">
-    Time and secrets are only the beginning. KAS Logic is designed
+    Time, Secret and Multisig Vaults are only the beginning. KAS Logic is designed
     as a growing interface for covenant-based applications on Kaspa.
   </p>
 
@@ -304,19 +269,6 @@ document.querySelector('#app').innerHTML = `
         the owner's key before KAS can move.
       </p>
       <code>SECRET + OWNER &rarr; SPEND</code>
-    </article>
-
-    <article class="lab-card">
-      <div class="lab-card-top">
-        <span>MULTISIG VAULT</span>
-        <b>PLANNED</b>
-      </div>
-      <h3>Shared authorization.</h3>
-      <p>
-        Require multiple keys to approve a transaction before
-        the covenant permits the KAS to move.
-      </p>
-      <code>M OF N KEYS &rarr; SPEND</code>
     </article>
 
     <article class="lab-card">
@@ -382,188 +334,21 @@ document.querySelector('#app').innerHTML = `
 
     </section>
 
-    <section id="view-learn" class="app-view">
-
-      <section class="hero compact-hero learn-hero">
-        <div class="eyebrow">HOW IT WORKS</div>
-
-        <h1>
-          KAS with<br>
-          <span>conditions.</span>
-        </h1>
-
-        <p>
-          KAS Logic helps construct covenant-controlled outputs.
-          The spending rules are enforced by Kaspa, not by KAS Logic.
-        </p>
-      </section>
-
-
-      <section class="learn-block">
-        <div class="learn-number">01</div>
-
-        <div class="learn-content">
-          <span class="learn-label">THE IDEA</span>
-          <h2>What is a covenant?</h2>
-
-          <p>
-            A covenant places conditions on how KAS can be spent.
-            Instead of only asking whether a transaction has a valid
-            signature, additional rules can be evaluated before the
-            network accepts the spend.
-          </p>
-
-          <div class="comparison-flow">
-            <div>
-              <span>STANDARD SPEND</span>
-              <code>OWNER SIGNATURE &rarr; KAS</code>
-            </div>
-
-            <div>
-              <span>TIME VAULT</span>
-              <code>TIME + OWNER &rarr; KAS</code>
-            </div>
-
-            <div>
-              <span>SECRET VAULT</span>
-              <code>SECRET &rarr; KAS</code>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="learn-block">
-        <div class="learn-number">02</div>
-
-        <div class="learn-content">
-          <span class="learn-label">CUSTODY</span>
-          <h2>Who controls the KAS?</h2>
-
-          <p>
-            KAS Logic does not take custody of the funds. When a vault
-            is funded, the KAS is controlled by the covenant conditions.
-            KAS Logic cannot simply move the KAS or override those rules.
-          </p>
-
-          <div class="learn-callout">
-            <strong>Your KAS. Your conditions.</strong>
-            <span>Kaspa decides whether the spending conditions are satisfied.</span>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="learn-block">
-        <div class="learn-number">03</div>
-
-        <div class="learn-content">
-          <span class="learn-label">KAS LOGIC</span>
-          <h2>What does this interface do?</h2>
-
-          <p>
-            KAS Logic helps you construct the covenant, fund its address,
-            build valid redemption transactions, and keep useful recovery
-            information.
-          </p>
-
-          <p>
-            The interface is a tool around the covenant. It is not the
-            authority that decides whether your KAS may be spent.
-          </p>
-        </div>
-      </section>
-
-
-      <section class="learn-block">
-        <div class="learn-number">04</div>
-
-        <div class="learn-content">
-          <span class="learn-label">LOCAL STORAGE</span>
-          <h2>How are my vaults remembered?</h2>
-
-          <p>
-            KAS Logic keeps vault information locally in your browser so
-            you can return to vaults created or imported on this device.
-          </p>
-
-          <p>
-            Your KAS and covenant remain on Kaspa. Keep your Recovery File
-            safe in case browser data is cleared or you use another device.
-          </p>
-        </div>
-      </section>
-
-
-      <section class="learn-block recovery-guide">
-        <div class="learn-number">05</div>
-
-        <div class="learn-content">
-          <span class="learn-label">RECOVERY</span>
-          <h2>What if KAS Logic disappears?</h2>
-
-          <p class="recovery-intro">
-            Your vault lives on Kaspa, not on this website.
-            Keep your Recovery File and the information required
-            to satisfy your covenant.
-          </p>
-
-          <div class="recovery-grid">
-
-            <div class="recovery-card">
-              <div class="recovery-card-head">
-                <span>TIME VAULT</span>
-                <code>RECOVERY FILE + OWNER WALLET</code>
-              </div>
-
-              <div class="recovery-step"><b>01</b><p>Download and safely keep the Recovery File.</p></div>
-              <div class="recovery-step"><b>02</b><p>Keep access to the owner wallet used for the vault.</p></div>
-              <div class="recovery-step"><b>03</b><p>Wait until the time-lock condition has been reached.</p></div>
-              <div class="recovery-step"><b>04</b><p>Reconstruct the vault and redeem with the owner wallet.</p></div>
-            </div>
-
-            <div class="recovery-card">
-              <div class="recovery-card-head">
-                <span>SECRET VAULT</span>
-                <code>RECOVERY FILE + SECRET</code>
-              </div>
-
-              <div class="recovery-step"><b>01</b><p>Download and safely keep the Recovery File.</p></div>
-              <div class="recovery-step"><b>02</b><p>Keep the original secret separately from the Recovery File.</p></div>
-              <div class="recovery-step"><b>03</b><p>Reconstruct the vault using the Recovery File.</p></div>
-              <div class="recovery-step"><b>04</b><p>Provide the original secret and redeem the KAS.</p></div>
-            </div>
-
-          </div>
-
-          <div class="recovery-flow">
-            <span>WEBSITE UNAVAILABLE?</span>
-            <code>RECOVERY FILE &rarr; RECONSTRUCT COVENANT &rarr; SATISFY CONDITION &rarr; SPEND KAS</code>
-          </div>
-
-          <div class="recovery-important">
-            <strong>Don't lose your Secret</strong>
-            <span>
-              A Secret Vault Recovery File does not contain your plaintext secret.
-              Keep the secret separately. Without it, the Secret Vault cannot be redeemed.
-            </span>
-          </div>
-        </div>
-      </section>
-
-
-      <section class="learn-warning">
-        <span>SECRET VAULT NOTE</span>
-
-        <p>
-          A Secret Vault uses knowledge of the secret as authorization.
-          The secret is revealed when it is used for redemption, so it
-          should not be treated as permanently private after spending.
-        </p>
-      </section>
-
-    </section>
     <section id="view-time" class="app-view">
+<!-- KASLOGIC EDUCATION V1 -->
+<section class="protocol-how protocol-how-time">
+  <div class="protocol-how-head">
+    <span>01 // UNDERSTAND THE COVENANT</span>
+    <h2>How Time Vault works</h2>
+    <code>DEFINE &rarr; FUND &rarr; WAIT &rarr; UNLOCK</code>
+  </div>
+  <div class="protocol-how-grid">
+    <div><b>001</b><strong>DEFINE</strong><p>Choose when your KAS should become spendable. Kaspa uses a DAA-based condition to enforce the unlock point.</p></div>
+    <div><b>002</b><strong>FUND</strong><p>Your KAS is sent to a covenant output governed by the time condition and owner authorization.</p></div>
+    <div><b>003</b><strong>WAIT</strong><p>The funds remain locked until the required DAA is reached. The interface cannot override this on-chain rule.</p></div>
+    <div><b>004</b><strong>UNLOCK</strong><p>Once the required DAA is reached, go to My Vaults, select your Time Vault, and redeem your KAS. Unlocking does not transfer funds automatically.</p></div>
+  </div>
+</section>
 
       <div class="tool-layout">
 
@@ -571,7 +356,7 @@ document.querySelector('#app').innerHTML = `
 
           <div class="eyebrow">01 // LIVE COVENANT // TIME<br><small>TESTNET-10 // KASWARE REQUIRED</small></div>
 
-          <h1>TIME<br><span>VAULT.</span></h1>
+          <h1>TIME<br><span>VAULT</span></h1>
 
           <p class="tool-lead">
             Lock KAS against time. The owner spending path becomes valid only after the temporal condition is satisfied.
@@ -658,13 +443,26 @@ document.querySelector('#app').innerHTML = `
 
       </div>
 
-      <section class="protocol-how protocol-how-time"><div class="protocol-how-head"><span>01 // PROTOCOL FLOW</span><h2>How Time Vault works.</h2><code>DEFINE &rarr; FUND &rarr; WAIT &rarr; SPEND</code></div><div class="protocol-how-grid"><div><b>001</b><strong>DEFINE</strong><p>Choose how long the KAS remains locked.</p></div><div><b>002</b><strong>FUND</strong><p>Commit KAS to the generated covenant output.</p></div><div><b>003</b><strong>WAIT</strong><p>Wait until the time condition has been reached.</p></div><div><b>004</b><strong>SPEND</strong><p>The owner can redeem after the condition is satisfied.</p></div></div></section><section id="timeVaultHistory" class="my-vaults" hidden>
+      <section id="timeVaultHistory" class="my-vaults" hidden>
         <div class="my-vaults-title">CREATED TIME VAULTS</div>
         <div id="timeVaultList"></div>
       </section>
 
     </section>
     <section id="view-secret" class="app-view">
+<section class="protocol-how">
+  <div class="protocol-how-head">
+    <span>02 // UNDERSTAND THE COVENANT</span>
+    <h2>How Secret Vault works</h2>
+    <code>SECRET &rarr; FUND &rarr; REVEAL &rarr; CLAIM</code>
+  </div>
+  <div class="protocol-how-grid">
+    <div><b>001</b><strong>CHOOSE SECRET</strong><p>Choose a secret code. The covenant commits to its cryptographic hash rather than storing the plaintext secret as the spending condition.</p></div>
+    <div><b>002</b><strong>FUND</strong><p>Lock KAS in the covenant output. Anyone who can provide the correct secret can satisfy its spending condition.</p></div>
+    <div><b>003</b><strong>REVEAL</strong><p>The secret is included in the redemption data and can become publicly visible when the transaction is published. Never reuse it.</p></div>
+    <div><b>004</b><strong>CLAIM</strong><p>The correct secret allows a valid redemption transaction to be constructed, subject to the covenant rules and network acceptance.</p></div>
+  </div>
+</section>
 
       <div class="secret-tool-layout">
 
@@ -672,7 +470,7 @@ document.querySelector('#app').innerHTML = `
 
           <div class="eyebrow">02 // LIVE COVENANT // HASHLOCK<br><small>TESTNET-10 // KASWARE REQUIRED</small></div>
 
-          <h1>SECRET<br><span>VAULT.</span></h1>
+          <h1>SECRET<br><span>VAULT</span></h1>
 
           <p class="tool-lead">
             Lock KAS behind a secret. Anyone who knows the correct secret
@@ -817,6 +615,19 @@ document.querySelector('#app').innerHTML = `
 
     </section>
     <section id="view-multisig" class="app-view">
+<section class="protocol-how">
+  <div class="protocol-how-head">
+    <span>03 // UNDERSTAND THE COVENANT</span>
+    <h2>How Multisig Vault works</h2>
+    <code>KEYS &rarr; FUND &rarr; SIGN &rarr; BROADCAST</code>
+  </div>
+  <div class="protocol-how-grid">
+    <div><b>001</b><strong>CHOOSE KEYS</strong><p>Provide three authorized public keys. The covenant requires signatures from two distinct authorized keys to release the funds.</p></div>
+    <div><b>002</b><strong>FUND</strong><p>Lock KAS in the 2-of-3 covenant. No single authorized wallet can spend the funds alone.</p></div>
+    <div><b>003</b><strong>SIGN</strong><p>Prepare the redemption and collect two valid signatures for the same transaction using the authorized KasWare wallets.</p></div>
+    <div><b>004</b><strong>BROADCAST</strong><p>Once both signatures are collected, broadcast the completed transaction. The network verifies the covenant conditions before accepting the spend.</p></div>
+  </div>
+</section>
 
   <div class="secret-tool-layout">
 
@@ -826,7 +637,7 @@ document.querySelector('#app').innerHTML = `
         <br><small>TESTNET-10 // KASWARE REQUIRED</small>
       </div>
 
-      <h1>MULTISIG<br><span>VAULT.</span></h1>
+      <h1>MULTISIG<br><span>VAULT</span></h1>
 
       <p class="tool-lead">
         Secure your KAS with three authorized keys.
@@ -1047,6 +858,7 @@ document.querySelector('#app').innerHTML = `
           <div class="vault-type-tabs">
             <button class="vault-type-filter active" data-vault-type="time">TIME VAULT</button>
             <button class="vault-type-filter" data-vault-type="secret">SECRET VAULT</button>
+            <button class="vault-type-filter" data-vault-type="multisig">MULTISIG VAULT</button>
           </div>
 
           <div id="vaultList" class="vault-groups">
@@ -1070,6 +882,11 @@ document.querySelector('#app').innerHTML = `
               <div id="activeSecretVaults" class="vault-group-list"></div>
             </section>
 
+            <section class="vault-group vault-group-active">
+  <div class="vault-group-heading"></div>
+  <div id="activeMultisigVaults" class="vault-group-list"></div>
+</section>
+
 
             <section class="vault-group vault-group-redeemed">
               <div class="vault-group-heading">
@@ -1089,6 +906,11 @@ document.querySelector('#app').innerHTML = `
 
               <div id="redeemedSecretVaults" class="vault-group-list"></div>
             </section>
+
+            <section class="vault-group vault-group-redeemed">
+  <div class="vault-group-heading"></div>
+  <div id="redeemedMultisigVaults" class="vault-group-list"></div>
+</section>
 
           </div>
         </div>
@@ -1111,7 +933,7 @@ document.querySelector('#app').innerHTML = `
 
       <section class="faq-hero">
         <div class="eyebrow">PROTOCOL FAQ</div>
-        <h1>Questions.<br><span>Answered.</span></h1>
+        <h1>QUESTIONS<br><span>ANSWERED</span></h1>
         <p>How KAS Logic, covenants, custody, recovery and the current Testnet environment work.</p>
         <div class="faq-status">
           <span>TESTNET-10</span>
@@ -1196,8 +1018,34 @@ document.querySelector('#app').innerHTML = `
         </details>
       </section>
 
+      <!-- KASLOGIC MULTISIG FAQ V1 -->
       <section class="faq-section">
-        <div class="faq-category">05 // WALLET + NETWORK</div>
+        <div class="faq-category">05 // MULTISIG VAULT</div>
+
+        <details class="faq-item">
+          <summary>How does a Multisig Vault work?</summary>
+          <p>A Multisig Vault locks KAS behind a 2-of-3 signature requirement. Three authorized wallet public keys are defined when the vault is created. To redeem the funds, two of those wallets must provide valid signatures for the redemption transaction.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Which wallets can unlock a Multisig Vault?</summary>
+          <p>Any two of the three authorized signing wallets can approve a redemption. KasLogic supports Wallet A + B, Wallet A + C, and Wallet B + C. An unrelated wallet cannot replace one of the authorized signers.</p>
+        </details>
+
+
+        <details class="faq-item">
+          <summary>What happens if I lose access to one wallet?</summary>
+          <p>You can still redeem the vault using the other two authorized wallets, provided you retain access to their signing keys. If fewer than two authorized signing keys remain available, the 2-of-3 redemption condition cannot be satisfied.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I recover my Multisig Vault?</summary>
+          <p>Keep the Multisig Recovery File and access to at least two authorized signing wallets. The Recovery File contains information needed to reconstruct the vault and its spending conditions, but it does not replace the private keys or signatures required to redeem funds.</p>
+        </details>
+
+      </section>
+      <section class="faq-section">
+        <div class="faq-category">06 // WALLET + NETWORK</div>
 
         <details class="faq-item">
           <summary>Which wallet does KAS Logic currently support?</summary>
@@ -1216,7 +1064,7 @@ document.querySelector('#app').innerHTML = `
       </section>
 
       <section class="faq-section faq-risk">
-        <div class="faq-category">06 // STATUS + RISK</div>
+        <div class="faq-category">07 // STATUS + RISK</div>
 
         <details class="faq-item">
           <summary>Is KAS Logic production-ready?</summary>
@@ -1269,12 +1117,23 @@ function applyVaultFilters() {
     const correctStatus =
       group.classList.contains('vault-group-' + currentVaultFilter)
 
-    const correctType =
-      currentVaultType === 'time'
-        ? group.querySelector('#activeTimeVaults, #redeemedTimeVaults') !== null
-        : group.querySelector('#activeSecretVaults, #redeemedSecretVaults') !== null
+    const selectorByType = {
+      time: '#activeTimeVaults, #redeemedTimeVaults',
+      secret: '#activeSecretVaults, #redeemedSecretVaults',
+      multisig: '#activeMultisigVaults, #redeemedMultisigVaults'
+    }
 
-    group.hidden = !(correctStatus && correctType)
+    const selector = selectorByType[currentVaultType]
+    const correctType = Boolean(selector && group.querySelector(selector))
+
+    const shouldShow = correctStatus && correctType
+
+    group.hidden = !shouldShow
+    group.style.setProperty(
+      'display',
+      shouldShow ? 'block' : 'none',
+      'important'
+    )
   })
 }
 
@@ -1337,7 +1196,10 @@ connectVaultWallet?.addEventListener('click', async () => {
 
 
 document.querySelectorAll('[data-open-view]').forEach(button => {
-  button.addEventListener('click', () => switchView(button.dataset.openView))
+  button.addEventListener('click', () => {
+    switchView(button.dataset.openView)
+    window.scrollTo(0, 0)
+  })
 })
 /* =========================================================
    SECRET VAULT V1 - SECRET ONLY
@@ -1986,6 +1848,16 @@ document.querySelector('#createMultisigVault')?.addEventListener('click', async 
       JSON.stringify(vaults)
     )
 
+    // Update immediately, then retry while the RPC indexes the funding.
+    await renderMultisigDashboard()
+    await refreshMultisigVaultSelector()
+
+    if (createTxid) {
+      syncNewMultisigVault(createTxid).catch(error => {
+        console.warn('Multisig live synchronization failed:', error)
+      })
+    }
+
     button.textContent = 'Vault Created ✓'
 
     showKasNotification(
@@ -2108,8 +1980,8 @@ document.querySelector('#multisigSignSecond')
 
       status.textContent = 'TWO SIGNATURES SAVED — READY FOR VERIFICATION'
 
-      // Broadcast remains disabled until final validation is implemented.
-      document.querySelector('#multisigBroadcast').disabled = true
+      // Refresh broadcast readiness after saving the second signature.
+      enableMultisigBroadcastIfReady()
 
       console.log('MULTISIG SECOND SIGNATURE SAVED:', signer)
 
@@ -2212,6 +2084,137 @@ restoreMultisigSigningSession()
 
 
 
+/* KASLOGIC MULTISIG CONFIRM MODAL V1 */
+function confirmKasLogicMultisigRedemption(details) {
+  return new Promise(resolve => {
+    const previousFocus = document.activeElement
+
+    const overlay = document.createElement('div')
+    overlay.className = 'kaslogic-confirm-overlay'
+
+    const dialog = document.createElement('div')
+    dialog.className = 'kaslogic-confirm-dialog'
+    dialog.setAttribute('role', 'dialog')
+    dialog.setAttribute('aria-modal', 'true')
+    dialog.setAttribute('aria-labelledby', 'kaslogic-confirm-title')
+
+    const title = document.createElement('h2')
+    title.id = 'kaslogic-confirm-title'
+    title.textContent = 'Confirm Multisig Redemption'
+
+    const subtitle = document.createElement('p')
+    subtitle.className = 'kaslogic-confirm-subtitle'
+    subtitle.textContent = 'Kaspa Testnet-10 · Review before broadcasting'
+
+    const grid = document.createElement('div')
+    grid.className = 'kaslogic-confirm-grid'
+
+    const addDetail = (label, value) => {
+      const item = document.createElement('div')
+      item.className = 'kaslogic-confirm-detail'
+
+      const labelEl = document.createElement('span')
+      labelEl.textContent = label
+
+      const valueEl = document.createElement('strong')
+      valueEl.textContent = value
+
+      item.append(labelEl, valueEl)
+      grid.appendChild(item)
+    }
+
+    addDetail(
+      'Signing wallets',
+      `Wallet ${details.pair[0]} + Wallet ${details.pair[1]}`
+    )
+
+    addDetail('Vault amount', `${details.input} tKAS`)
+    addDetail('Network fee', `${details.fee} tKAS`)
+    addDetail('Recipient receives', `${details.receive} tKAS`)
+
+    const destinationBox = document.createElement('div')
+    destinationBox.className = 'kaslogic-confirm-destination'
+
+    const destinationLabel = document.createElement('span')
+    destinationLabel.textContent = 'Destination wallet'
+
+    const destinationValue = document.createElement('code')
+    destinationValue.textContent = details.destination
+
+    destinationBox.append(destinationLabel, destinationValue)
+
+    const actions = document.createElement('div')
+    actions.className = 'kaslogic-confirm-actions'
+
+    const cancelButton = document.createElement('button')
+    cancelButton.type = 'button'
+    cancelButton.className = 'kaslogic-confirm-cancel'
+    cancelButton.textContent = 'Cancel'
+
+    const confirmButton = document.createElement('button')
+    confirmButton.type = 'button'
+    confirmButton.className = 'kaslogic-confirm-approve'
+    confirmButton.textContent = 'Confirm Redemption'
+
+    actions.append(cancelButton, confirmButton)
+
+    dialog.append(
+      title,
+      subtitle,
+      grid,
+      destinationBox,
+      actions
+    )
+
+    overlay.appendChild(dialog)
+
+    let settled = false
+
+    const finish = approved => {
+      if (settled) return
+      settled = true
+
+      document.removeEventListener('keydown', onKeyDown)
+      overlay.remove()
+
+      previousFocus?.focus?.()
+      resolve(approved)
+    }
+
+    const onKeyDown = event => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        finish(false)
+        return
+      }
+
+      if (event.key === 'Tab') {
+        const buttons = [cancelButton, confirmButton]
+        const current = buttons.indexOf(document.activeElement)
+
+        if (event.shiftKey && current === 0) {
+          event.preventDefault()
+          confirmButton.focus()
+        } else if (!event.shiftKey && current === 1) {
+          event.preventDefault()
+          cancelButton.focus()
+        }
+      }
+    }
+
+    cancelButton.addEventListener('click', () => finish(false))
+    confirmButton.addEventListener('click', () => finish(true))
+
+    overlay.addEventListener('click', event => {
+      if (event.target === overlay) finish(false)
+    })
+
+    document.addEventListener('keydown', onKeyDown)
+    document.body.appendChild(overlay)
+
+    cancelButton.focus()
+  })
+}
 async function submitMultisigRedemption() {
   const session = JSON.parse(
     localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
@@ -2231,14 +2234,15 @@ async function submitMultisigRedemption() {
     throw new Error('Kaspa RPC is not connected')
   }
 
-  if (session.pair !== 'AB') {
-    throw new Error('Only Wallet A + Wallet B is supported')
+  if (!['AB', 'AC', 'BC'].includes(session.pair)) {
+    throw new Error('Unsupported Multisig signing pair')
   }
 
-  for (const [record, signer, index] of [
-    [first, 'A', 0],
-    [second, 'B', 1]
+  for (const [record, signer] of [
+    [first, session.pair[0]],
+    [second, session.pair[1]]
   ]) {
+    const index = 'ABC'.indexOf(signer)
     if (
       record.signer !== signer ||
       record.publicKey !== session.publicKeys[index] ||
@@ -2256,7 +2260,9 @@ async function submitMultisigRedemption() {
 
   const vault = vaults.find(v =>
     v.vaultAddress === session.vaultAddress &&
-    v.network === 'testnet-10'
+    v.createTxid === session.fundingTxid &&
+    v.network === 'testnet-10' &&
+    v.type === 'multisig-2of3'
   )
 
   if (!vault) throw new Error('Multisig Vault not found')
@@ -2301,11 +2307,12 @@ async function submitMultisigRedemption() {
     throw new Error('Vault address verification failed')
   }
 
-  const expectedDestination =
-    'kaspatest:qrmuvfzrgulnv89g2pra9np5smuuwlz5ltyxg5t40kt0lmsm9hx6uf0ufz0lr'
-
-  if (session.destination !== expectedDestination) {
-    throw new Error('Unexpected destination address')
+  /* KASLOGIC MULTISIG DESTINATION VALIDATION V2 */
+  if (
+    typeof session.destination !== 'string' ||
+    !session.destination.startsWith('kaspatest:')
+  ) {
+    throw new Error('Invalid Testnet redemption destination')
   }
 
   const result = await window.kaspaRpc.getUtxosByAddresses([
@@ -2326,18 +2333,59 @@ async function submitMultisigRedemption() {
   const fee = inputAmount - outputAmount
 
   if (
-    inputAmount !== 1_000_000_000n ||
-    outputAmount !== 990_000_000n ||
-    fee !== 10_000_000n ||
-    inputAmount !== BigInt(session.amountSompi)
+    inputAmount !== BigInt(session.amountSompi) ||
+    inputAmount !== BigInt(vault.amount) ||
+    outputAmount <= 0n ||
+    outputAmount !== inputAmount - 10_000_000n ||
+    fee !== 10_000_000n
   ) {
     throw new Error('Unexpected transaction amounts')
   }
 
+  const branchSelectors = {
+    AB: [0x5c, 0x4b, 0xaa, 0x54],
+    AC: [0x58, 0x3d, 0xdf, 0x7b],
+    BC: [0x10, 0xe2, 0xe6, 0x60]
+  }
+
+  // Verify the unsigned transaction that both wallets signed.
+  const verificationInput = new window.TransactionInput({
+    previousOutpoint: utxo.outpoint,
+    signatureScript: new Uint8Array(),
+    sequence: 0n,
+    sigOpCount: 0,
+    computeBudget: 30,
+    utxo
+  })
+
+  const verificationOutput = new window.TransactionOutput(
+    outputAmount,
+    window.payToAddressScript(session.destination)
+  )
+
+  const verificationTx = new window.Transaction({
+    version: 1,
+    inputs: [verificationInput],
+    outputs: [verificationOutput],
+    lockTime: 0n,
+    subnetworkId: '0000000000000000000000000000000000000000',
+    gas: 0n,
+    payload: ''
+  })
+
+  verificationTx.finalize()
+
+  if (
+    verificationTx.serializeToSafeJSON() !== session.unsignedTxJson
+  ) {
+    throw new Error(
+      'Transaction differs from the unsigned transaction signed by both wallets'
+    )
+  }
   const actionScript = new Uint8Array([
     0x41, ...bytes(first.signatureHex),
     0x41, ...bytes(second.signatureHex),
-    0x04, 0x5c, 0x4b, 0xaa, 0x54
+    0x04, ...branchSelectors[session.pair]
   ])
 
   const signatureScript =
@@ -2372,15 +2420,13 @@ async function submitMultisigRedemption() {
 
   tx.finalize()
 
-  const approved = window.confirm(
-    'BROADCAST MULTISIG REDEMPTION?\n\n' +
-    'Network: Kaspa Testnet-10\n' +
-    'Signers: Wallet A + Wallet B\n' +
-    'Input: 10 tKAS\n' +
-    'Receive: 9.9 tKAS\n' +
-    'Fee: 0.1 tKAS\n\n' +
-    'Destination:\n' + session.destination
-  )
+  const approved = await confirmKasLogicMultisigRedemption({
+    pair: session.pair,
+    input: Number(inputAmount) / 1e8,
+    receive: Number(outputAmount) / 1e8,
+    fee: Number(fee) / 1e8,
+    destination: session.destination
+  })
 
   if (!approved) return null
 
@@ -2421,6 +2467,38 @@ document.querySelector('#multisigBroadcast')
 
       status.textContent = 'TRANSACTION SUBMITTED'
 
+      /* KASLOGIC MULTISIG STATUS FIX V1 */
+      // Record the submitted redemption against its original vault.
+      const completedSession = JSON.parse(
+        localStorage.getItem('multisigUnsignedRedeemV1') || 'null'
+      )
+
+      if (completedSession) {
+        try {
+          const savedVaults = JSON.parse(
+            localStorage.getItem('kasLogicMultisigVaults') || '[]'
+          )
+
+          const matchingVault = savedVaults.find(v =>
+            v.vaultAddress === completedSession.vaultAddress &&
+            v.createTxid === completedSession.fundingTxid &&
+            v.network === 'testnet-10'
+          )
+
+          if (matchingVault) {
+            matchingVault.redeemTxid = txid
+            matchingVault.redemptionSubmitted = true
+
+            localStorage.setItem(
+              'kasLogicMultisigVaults',
+              JSON.stringify(savedVaults)
+            )
+          }
+        } catch (trackingError) {
+          console.warn('Could not save Multisig redemption history:', trackingError)
+        }
+      }
+
       // Clear only the completed Multisig signing session.
       localStorage.removeItem('multisigUnsignedRedeemV1')
       localStorage.removeItem('multisigSigFirstV1')
@@ -2436,8 +2514,20 @@ document.querySelector('#multisigBroadcast')
       document.querySelector('#multisigSignSecond').disabled = true
       document.querySelector('#multisigBroadcast').disabled = true
 
-      // Refresh available vaults after submission.
-      refreshMultisigVaultSelector().catch(console.error)
+      // Immediately remove the submitted funding output from the selector.
+      const vaultSelect = document.querySelector('#multisigRedeemVault')
+
+      if (vaultSelect && completedSession) {
+        const spentOption = [...vaultSelect.options].find(
+          option => option.value === completedSession.fundingTxid
+        )
+
+        spentOption?.remove()
+        vaultSelect.value = ''
+      }
+
+      // Rebuild using saved redemption history and on-chain UTXOs.
+      await refreshMultisigVaultSelector()
 
       showKasNotification(
         'Multisig Redemption Submitted',
@@ -2476,11 +2566,17 @@ function enableMultisigBroadcastIfReady() {
   )
 
   if (
-    session?.pair === 'AB' &&
-    first?.signer === 'A' &&
-    second?.signer === 'B' &&
+    ['AB', 'AC', 'BC'].includes(session?.pair) &&
+    first?.signer === session.pair[0] &&
+    second?.signer === session.pair[1] &&
+    first.publicKey === session.publicKeys['ABC'.indexOf(first.signer)] &&
+    second.publicKey === session.publicKeys['ABC'.indexOf(second.signer)] &&
+    first.fundingTxid === session.fundingTxid &&
+    second.fundingTxid === session.fundingTxid &&
     first.unsignedTxJson === session.unsignedTxJson &&
-    second.unsignedTxJson === session.unsignedTxJson
+    second.unsignedTxJson === session.unsignedTxJson &&
+    /^[0-9a-fA-F]{130}$/.test(first.signatureHex || '') &&
+    /^[0-9a-fA-F]{130}$/.test(second.signatureHex || '')
   ) {
     button.disabled = false
     status.textContent = 'TWO SIGNATURES SAVED — READY TO BROADCAST'
@@ -2603,7 +2699,7 @@ document.querySelector('#multisigStartRedeem')
         throw new Error('Kaspa RPC is not connected')
       }
 
-      const vaultAddress =
+      const selectedFundingTxid =
         document.querySelector('#multisigRedeemVault').value
 
       const destination =
@@ -2612,7 +2708,7 @@ document.querySelector('#multisigStartRedeem')
       const pair =
         document.querySelector('#multisigRedeemPair').value
 
-      if (!vaultAddress) throw new Error('Select a Multisig Vault')
+      if (!selectedFundingTxid) throw new Error('Select a Multisig Vault')
       if (!destination.startsWith('kaspatest:')) {
         throw new Error('Enter a Testnet destination address')
       }
@@ -2625,11 +2721,14 @@ document.querySelector('#multisigStartRedeem')
       )
 
       const vault = vaults.find(v =>
-        v.vaultAddress === vaultAddress &&
-        v.network === 'testnet-10'
+        v.createTxid === selectedFundingTxid &&
+        v.network === 'testnet-10' &&
+        v.type === 'multisig-2of3'
       )
 
       if (!vault) throw new Error('Multisig Vault not found')
+
+      const vaultAddress = vault.vaultAddress
 
       const redeemScript = hexBytes(vault.redeemScriptHex)
 
@@ -2661,13 +2760,16 @@ document.querySelector('#multisigStartRedeem')
         vaultAddress
       ])
 
-      if (utxos.entries?.length !== 1) {
+      const utxo = findMultisigFundingUtxo(
+        utxos.entries,
+        vault
+      )
+
+      if (!utxo) {
         throw new Error(
-          'Expected exactly one vault UTXO for this test'
+          'Selected funding output is spent, missing, or ambiguous'
         )
       }
-
-      const utxo = utxos.entries[0]
       const fee = 10_000_000n
       const outputAmount = BigInt(utxo.amount) - fee
 
@@ -2757,49 +2859,123 @@ document.querySelector('#multisigStartRedeem')
   })
 
 
+/* KASLOGIC MULTISIG UTXO SELECTION V2 */
+function findMultisigFundingUtxo(entries, vault) {
+  if (!vault.createTxid) return null
+
+  const matches = (entries || []).filter(entry =>
+    entry.outpoint?.transactionId?.toLowerCase() ===
+    vault.createTxid.toLowerCase()
+  )
+
+  if (vault.fundingIndex != null) {
+    return matches.find(entry =>
+      Number(entry.outpoint.index) === Number(vault.fundingIndex) &&
+      BigInt(entry.amount) === BigInt(vault.amount)
+    ) || null
+  }
+
+  const amountMatches = matches.filter(entry =>
+    BigInt(entry.amount) === BigInt(vault.amount)
+  )
+
+  // Never guess when multiple outputs could match.
+  return amountMatches.length === 1 ? amountMatches[0] : null
+}
+/* KASLOGIC MULTISIG LIVE SYNC V2 */
+async function syncNewMultisigVault(fundingTxid) {
+  const maxAttempts = 12
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    await refreshMultisigVaultSelector()
+
+    const select = document.querySelector('#multisigRedeemVault')
+
+    const found = select && [...select.options].some(
+      option => option.value === fundingTxid
+    )
+
+    if (found) {
+      await renderMultisigDashboard()
+      return true
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 1500))
+  }
+
+  await renderMultisigDashboard()
+
+  console.warn(
+    'Multisig funding is not yet visible through the connected RPC'
+  )
+
+  return false
+}
 async function refreshMultisigVaultSelector() {
   const select = document.querySelector('#multisigRedeemVault')
   const prepareButton = document.querySelector('#multisigStartRedeem')
 
   if (!select) return
 
+  const previousValue = select.value
   select.innerHTML = '<option value="">Select a Multisig Vault</option>'
-  prepareButton.disabled = true
+
+  if (prepareButton) prepareButton.disabled = true
 
   const vaults = JSON.parse(
     localStorage.getItem('kasLogicMultisigVaults') || '[]'
   )
 
-  for (const vault of vaults) {
-    if (vault.network !== 'testnet-10') continue
+  if (!window.kaspaRpc) return
 
-    let balance = 0n
+  const cache = new Map()
+
+  for (const vault of [...vaults].reverse()) {
+    /* KASLOGIC MULTISIG SELECTOR V3 */
+    if (
+      vault.network !== 'testnet-10' ||
+      vault.type !== 'multisig-2of3' ||
+      !vault.createTxid ||
+      !vault.vaultAddress ||
+      vault.redeemTxid ||
+      vault.status === 'redeemed'
+    ) continue
 
     try {
-      if (window.kaspaRpc) {
+      let entries = cache.get(vault.vaultAddress)
+
+      if (!entries) {
         const result = await window.kaspaRpc.getUtxosByAddresses([
           vault.vaultAddress
         ])
 
-        balance = (result.entries || []).reduce(
-          (sum, entry) => sum + BigInt(entry.amount),
-          0n
-        )
+        entries = result.entries || []
+        cache.set(vault.vaultAddress, entries)
       }
+
+      const utxo = findMultisigFundingUtxo(entries, vault)
+
+      if (!utxo) continue
+
+      const option = document.createElement('option')
+      option.value = vault.createTxid
+
+      option.textContent =
+        `${vault.vaultAddress.slice(0, 22)}... - ` +
+        `${Number(utxo.amount) / 1e8} tKAS - ` +
+        `${vault.createTxid.slice(0, 10)}...`
+
+      select.appendChild(option)
     } catch (error) {
-      console.warn('Could not fetch Multisig balance:', error)
-      continue
+      console.warn('Multisig selector lookup failed:', error)
     }
-
-    if (balance <= 0n) continue
-
-    const option = document.createElement('option')
-    option.value = vault.vaultAddress
-    option.textContent =
-      `${vault.vaultAddress.slice(0, 22)}... — ${Number(balance) / 1e8} tKAS`
-
-    select.appendChild(option)
   }
+
+  if ([...select.options].some(o => o.value === previousValue)) {
+    select.value = previousValue
+  }
+
+  if (prepareButton) prepareButton.disabled = !select.value
 }
 
 document.querySelector('#multisigRedeemVault')
@@ -3005,6 +3181,150 @@ recoveryFileInput.addEventListener('change', async () => {
       throw new Error('Recovery file is not for testnet-10')
     }
 
+    // KASLOGIC MULTISIG RECOVERY V1
+    if (recovery.contract === 'multisig-vault') {
+      if (Number(recovery.contractVersion) !== 1) {
+        throw new Error('Unsupported Multisig Vault version')
+      }
+
+      if (
+        !Array.isArray(recovery.publicKeys) ||
+        recovery.publicKeys.length !== 3 ||
+        !recovery.publicKeys.every(
+          key => typeof key === 'string' &&
+            /^[0-9a-f]{64}$/i.test(key)
+        )
+      ) {
+        throw new Error('Invalid Multisig public keys')
+      }
+
+      const keys = recovery.publicKeys.map(key => key.toLowerCase())
+
+      if (new Set(keys).size !== 3) {
+        throw new Error('Multisig public keys must be distinct')
+      }
+
+      if (!/^kaspatest:[a-z0-9]+$/i.test(recovery.vaultAddress || '')) {
+        throw new Error('Invalid Multisig vault address')
+      }
+
+      if (
+        !/^[0-9a-f]{64}$/i.test(recovery.fundingTxid || '')
+      ) {
+        throw new Error('Invalid funding transaction ID')
+      }
+
+      if (
+        !/^\d+$/.test(String(recovery.amountSompi ?? '')) ||
+        BigInt(recovery.amountSompi) <= 0n
+      ) {
+        throw new Error('Invalid Multisig amount')
+      }
+
+      if (
+        typeof recovery.redeemScriptHex !== 'string' ||
+        !/^(?:[0-9a-f]{2})+$/i.test(recovery.redeemScriptHex)
+      ) {
+        throw new Error('Invalid Multisig redeem script')
+      }
+
+      const expectedScript = new Uint8Array(
+        buildMultisigVaultBytecode(...keys)
+      )
+
+      const expectedHex = Array.from(
+        expectedScript,
+        byte => byte.toString(16).padStart(2, '0')
+      ).join('')
+
+      if (
+        expectedHex !== recovery.redeemScriptHex.toLowerCase()
+      ) {
+        throw new Error(
+          'Recovery verification failed: public keys do not match the covenant script'
+        )
+      }
+
+      const scriptPublicKey = payToScriptHashScript(expectedScript)
+      const derivedAddress = addressFromScriptPublicKey(
+        scriptPublicKey,
+        'testnet-10'
+      ).toString()
+
+      if (derivedAddress !== recovery.vaultAddress) {
+        throw new Error(
+          'Recovery verification failed: script does not match vault address'
+        )
+      }
+
+      if (!window.kaspaRpc) {
+        throw new Error('Testnet-10 RPC is not connected. Try again.')
+      }
+
+      const utxos = await window.kaspaRpc.getUtxosByAddresses([
+        recovery.vaultAddress
+      ])
+
+      const fundingUtxo = (utxos.entries || []).find(entry =>
+        String(entry.outpoint?.transactionId || '').toLowerCase() ===
+          recovery.fundingTxid.toLowerCase() &&
+        BigInt(entry.amount) === BigInt(recovery.amountSompi)
+      )
+
+      if (!fundingUtxo) {
+        throw new Error(
+          'The matching funding UTXO was not found. The vault may have been spent or the recovery file may be incorrect.'
+        )
+      }
+
+      const vaults = JSON.parse(
+        localStorage.getItem('kasLogicMultisigVaults') || '[]'
+      )
+
+      if (!Array.isArray(vaults)) {
+        throw new Error('Invalid local Multisig history')
+      }
+
+      const exists = vaults.some(v =>
+        v.vaultAddress === recovery.vaultAddress &&
+        String(v.createTxid || '').toLowerCase() ===
+          recovery.fundingTxid.toLowerCase()
+      )
+
+      if (exists) {
+        throw new Error('This Multisig Vault is already in My Vaults')
+      }
+
+      vaults.push({
+        type: 'multisig-2of3',
+        version: 1,
+        network: 'testnet-10',
+        vaultAddress: recovery.vaultAddress,
+        senderAddress: null,
+        publicKeys: keys,
+        amount: String(recovery.amountSompi),
+        createTxid: recovery.fundingTxid,
+        redeemScriptHex: expectedHex,
+        status: 'active',
+        recovered: true
+      })
+
+      localStorage.setItem(
+        'kasLogicMultisigVaults',
+        JSON.stringify(vaults)
+      )
+
+      await setupVaultUI()
+      await renderMultisigDashboard()
+      await refreshMultisigVaultSelector()
+
+      showKasNotification(
+        'Multisig Vault Restored',
+        'Your verified 2-of-3 Multisig Vault is available in My Vaults.',
+        'success'
+      )
+      return
+    }
     if (recovery.contract === 'secret-vault') {
       if (Number(recovery.contractVersion) !== 1) {
         throw new Error('Unsupported Secret Vault version')
@@ -3197,6 +3517,51 @@ recoveryFileInput.addEventListener('change', async () => {
     showKasNotification('Recovery Import Failed', error?.message || String(error), 'error')
   }
 })
+// KASLOGIC MULTISIG RECOVERY V1
+function downloadMultisigVaultRecovery(vault) {
+  if (
+    !vault ||
+    vault.type !== 'multisig-2of3' ||
+    vault.network !== 'testnet-10' ||
+    !vault.createTxid ||
+    !vault.redeemScriptHex ||
+    !Array.isArray(vault.publicKeys) ||
+    vault.publicKeys.length !== 3
+  ) {
+    throw new Error('Incomplete Multisig recovery information')
+  }
+
+  const recovery = {
+    format: 'kas-logic-recovery',
+    formatVersion: 1,
+    network: 'testnet-10',
+    contract: 'multisig-vault',
+    contractVersion: 1,
+    vaultAddress: vault.vaultAddress,
+    publicKeys: vault.publicKeys,
+    amountSompi: vault.amount,
+    fundingTxid: vault.createTxid,
+    redeemScriptHex: vault.redeemScriptHex
+  }
+
+  const blob = new Blob(
+    [JSON.stringify(recovery, null, 2)],
+    { type: 'application/json' }
+  )
+
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download =
+    `kas-logic-multisig-${vault.vaultAddress.slice(-8)}.json`
+
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
 function downloadSecretVaultRecovery(vault) {
   const recovery = {
     format: 'kas-logic-recovery',
@@ -3677,6 +4042,7 @@ function txExplorerLink(txid) {
 }
 
 async function setupVaultUI() {
+  // Multisig dashboard is refreshed separately after setup.
   const renderId = Date.now() + '-' + Math.random().toString(16).slice(2,6)
   migrateOldVault()
 
@@ -4033,8 +4399,155 @@ async function setupVaultUI() {
     if (secretVaultHistory) secretVaultHistory.hidden = false
   }
 }
+/* KASLOGIC MULTISIG DASHBOARD V2 */
+
+async function renderMultisigDashboard() {
+  const active = document.querySelector('#activeMultisigVaults')
+  const redeemed = document.querySelector('#redeemedMultisigVaults')
+
+  if (!active || !redeemed) return
+
+  active.innerHTML = ''
+  redeemed.innerHTML = ''
+
+  const vaults = JSON.parse(
+    localStorage.getItem('kasLogicMultisigVaults') || '[]'
+  )
+
+  const escapeHtml = value =>
+    String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[char])
+
+  for (const vault of [...vaults].reverse()) {
+    if (
+      vault.network !== 'testnet-10' ||
+      vault.type !== 'multisig-2of3' ||
+      !vault.vaultAddress
+    ) continue
+
+    let status = vault.status === 'redeemed'
+      ? 'REDEEMED'
+      : 'ACTIVE'
+
+    try {
+      if (window.kaspaRpc) {
+        const result = await window.kaspaRpc.getUtxosByAddresses([
+          vault.vaultAddress
+        ])
+
+        const fundingUtxo = findMultisigFundingUtxo(
+          result.entries,
+          vault
+        )
+
+        if (fundingUtxo) {
+          status = 'ACTIVE'
+        } else if (vault.redeemTxid) {
+          status = 'REDEEMED'
+        } else {
+          status = 'SPENT / NOT FOUND'
+        }
+      }
+    } catch (error) {
+      console.warn('Multisig status check failed:', error)
+    }
+
+    const card = document.createElement('div')
+    card.className = 'vault-status multisig-vault-status'
+
+    card.innerHTML = `
+      <div class="vault-status-header">
+        <span>MULTISIG VAULT</span>
+        <strong>${status}</strong>
+      </div>
+
+      <div class="vault-details">
+        <div>
+          <span>Amount</span>
+          <strong>${Number(vault.amount || 0) / 1e8} KAS</strong>
+        </div>
+        <div>
+          <span>Authorization</span>
+          <strong>2 OF 3 SIGNATURES</strong>
+        </div>
+      </div>
+
+      <div class="vault-address">
+        <span>Vault address</span>
+        <code>${escapeHtml(vault.vaultAddress)}</code>
+      </div>
+
+      ${/* KASLOGIC MULTISIG EXPLORER LINKS V2 */ ''}
+      ${vault.createTxid ? `
+        <div class="vault-address">
+          <span>Funding TX</span>
+          ${txExplorerLink(vault.createTxid)}
+        </div>
+      ` : ''}
+
+      ${vault.redeemTxid ? `
+        <div class="vault-address">
+          <span>Redemption TX</span>
+          ${txExplorerLink(vault.redeemTxid)}
+        </div>
+      ` : ''}
+    `
+
+    if (status === 'ACTIVE') {
+      const recoveryButton = document.createElement('button')
+      recoveryButton.className = 'create recovery-download'
+      recoveryButton.textContent = 'Download Recovery'
+
+      recoveryButton.onclick = () => {
+        try {
+          downloadMultisigVaultRecovery(vault)
+        } catch (error) {
+          showKasNotification(
+            'Recovery Download Failed',
+            error?.message || String(error),
+            'error'
+          )
+        }
+      }
+
+      card.appendChild(recoveryButton)
+    }
+    if (status === 'ACTIVE') {
+      const button = document.createElement('button')
+      button.className = 'create'
+      button.textContent = 'Open Multisig Vault'
+
+      button.onclick = async () => {
+        switchView('multisig')
+        window.scrollTo(0, 0)
+
+        await refreshMultisigVaultSelector()
+
+        const select = document.querySelector('#multisigRedeemVault')
+
+        if (select) {
+          select.value = vault.createTxid
+          select.dispatchEvent(new Event('change'))
+        }
+      }
+
+      card.appendChild(button)
+      active.appendChild(card)
+    } else {
+      redeemed.appendChild(card)
+    }
+  }
+
+  applyVaultFilters()
+}
 async function startKasLogic() {
   await setupVaultUI()
+  await renderMultisigDashboard()
 }
 
 window.addEventListener('kaspa-daa-ready', startKasLogic, { once: true })
@@ -4085,3 +4598,28 @@ window.addEventListener('kaspa-daa-ready', startKasLogic, { once: true })
 
 
 
+
+
+// KASLOGIC RPC STATUS V2 — UI
+function updateKaspaNetworkBadge(state) {
+  const badge = document.getElementById('kasRpcStatus')
+  const label = document.getElementById('kasRpcStatusText')
+  if (!badge || !label) return
+
+  const valid = ['connected', 'connecting', 'disconnected'].includes(state)
+    ? state
+    : 'connecting'
+
+  badge.dataset.state = valid
+  label.textContent = {
+    connected: 'Connected',
+    connecting: 'Connecting',
+    disconnected: 'Offline'
+  }[valid]
+}
+
+window.addEventListener('kaspa-rpc-status', event => {
+  updateKaspaNetworkBadge(event.detail?.state)
+})
+
+updateKaspaNetworkBadge(window.kaspaRpcStatus || 'connecting')

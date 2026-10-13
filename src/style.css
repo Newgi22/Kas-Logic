@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -4980,7 +4980,7 @@ body::before {
 }
 
 #view-home .explore-section::before {
-  content: "AVAILABLE PROTOCOLS // 02";
+  content: "AVAILABLE PROTOCOLS // 03";
   position: absolute;
   top: 38px;
   right: 0;
@@ -5664,4 +5664,666 @@ body::before {
     font-size: 9px;
     letter-spacing: .12em;
     color: rgba(111,255,199,.35);
+}
+
+/* KASLOGIC VAULT FILTER VISIBILITY FIX */
+#view-vaults .vault-group[hidden] {
+  display: none !important;
+}
+
+/* KASLOGIC COMPACT VAULT INTRO V1 */
+
+/* Compact explanation across all three vault pages */
+#view-time .protocol-how,
+#view-secret .protocol-how,
+#view-multisig .protocol-how {
+  margin-top: 20px !important;
+  margin-bottom: 12px !important;
+  padding-top: 18px !important;
+  padding-bottom: 12px !important;
+  min-height: 0 !important;
+}
+
+/* Smaller, clearer heading */
+#view-time .protocol-how-head,
+#view-secret .protocol-how-head,
+#view-multisig .protocol-how-head {
+  margin-bottom: 14px !important;
+  gap: 8px !important;
+}
+
+#view-time .protocol-how-head h2,
+#view-secret .protocol-how-head h2,
+#view-multisig .protocol-how-head h2 {
+  font-size: clamp(25px, 3vw, 36px) !important;
+  line-height: 1.12 !important;
+  margin: 8px 0 !important;
+}
+
+/* Compact four-step cards */
+#view-time .protocol-how-grid > div,
+#view-secret .protocol-how-grid > div,
+#view-multisig .protocol-how-grid > div {
+  padding: 14px !important;
+  min-height: 0 !important;
+}
+
+#view-time .protocol-how-grid p,
+#view-secret .protocol-how-grid p,
+#view-multisig .protocol-how-grid p {
+  margin-top: 6px !important;
+  line-height: 1.45 !important;
+  font-size: 12px !important;
+}
+
+/* Bring existing creation interfaces closer */
+#view-time .time-tool-layout,
+#view-time .time-layout,
+#view-time .tool-layout,
+#view-secret .secret-tool-layout,
+#view-multisig .secret-tool-layout {
+  margin-top: 12px !important;
+  padding-top: 0 !important;
+}
+
+/* Remove excess space before vault forms */
+#view-time .protocol-how + *,
+#view-secret .protocol-how + *,
+#view-multisig .protocol-how + * {
+  margin-top: 12px !important;
+}
+
+/* Keep mobile layout readable */
+@media (max-width: 700px) {
+  #view-time .protocol-how,
+  #view-secret .protocol-how,
+  #view-multisig .protocol-how {
+    margin-top: 12px !important;
+  }
+
+  #view-time .protocol-how-grid > div,
+  #view-secret .protocol-how-grid > div,
+  #view-multisig .protocol-how-grid > div {
+    padding: 12px !important;
+  }
+}
+
+/* KASLOGIC VAULT TOP SPACING V1 */
+
+/* Bring explanations closer to the navigation */
+#view-time,
+#view-secret,
+#view-multisig {
+  padding-top: 0 !important;
+}
+
+#view-time > .protocol-how,
+#view-secret > .protocol-how,
+#view-multisig > .protocol-how {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Reduce the remaining spacing above the heading */
+#view-time .protocol-how-head,
+#view-secret .protocol-how-head,
+#view-multisig .protocol-how-head {
+  padding-top: 0 !important;
+}
+
+/* Keep the creation interface close */
+#view-time .protocol-how + *,
+#view-secret .protocol-how + *,
+#view-multisig .protocol-how + * {
+  margin-top: 10px !important;
+}
+
+/* KASLOGIC PAGE SPACING FINAL V1 */
+
+/* Homepage: bring hero closer to navigation */
+#view-home .v4-hero {
+  padding-top: 24px !important;
+}
+
+/* Vault explanations: consistent top spacing */
+#view-time > .protocol-how,
+#view-secret > .protocol-how,
+#view-multisig > .protocol-how {
+  margin-top: 16px !important;
+  padding-top: 0 !important;
+}
+
+/* Creation modules: remove oversized internal top gap */
+#view-secret .secret-tool-layout,
+#view-multisig .secret-tool-layout {
+  padding-top: 12px !important;
+}
+
+/* Other dashboard pages */
+#view-vaults,
+#view-faq {
+  padding-top: 20px !important;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  #view-home .v4-hero {
+    padding-top: 20px !important;
+  }
+
+  #view-secret .secret-tool-layout,
+  #view-multisig .secret-tool-layout {
+    padding-top: 10px !important;
+  }
+}
+
+/* KASLOGIC NAV GAP FIX V1 */
+
+/* Remove excessive space beneath navigation on every page */
+.kas-logic-app > .main-nav {
+  margin-bottom: 16px !important;
+}
+
+/* KASLOGIC FINAL PAGE ALIGNMENT V1 */
+
+/* Time Vault: remove decorative top line and T0/CONDITION/T+ label */
+#view-time .protocol-how-time {
+  border-top: none !important;
+}
+
+#view-time .protocol-how-time::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* My Vaults: reduce empty space above dashboard content */
+#view-vaults {
+  padding-top: 0 !important;
+}
+
+#view-vaults .vault-dashboard {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* FAQ: bring introduction closer to navigation */
+#view-faq {
+  padding-top: 0 !important;
+}
+
+#view-faq .faq-hero {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* ===== KAS LOGIC — VISUAL CONSISTENCY V1 ===== */
+
+/* Identical heading dimensions across all three vaults */
+#view-time .tool-intro h1,
+#view-secret .secret-tool-intro h1,
+#view-multisig .secret-tool-intro h1 {
+  font-size: clamp(4rem, 6vw, 5rem) !important;
+  line-height: 0.95 !important;
+  letter-spacing: -0.075em !important;
+}
+
+/* Consistent second-line accent */
+#view-time .tool-intro h1 span,
+#view-secret .secret-tool-intro h1 span,
+#view-multisig .secret-tool-intro h1 span {
+  color: #6fffc7 !important;
+}
+
+/* Unified vault creation card appearance */
+#view-time .vault-card,
+#view-secret .vault-card,
+#view-multisig .vault-card {
+  background: #0b100e !important;
+  border: 1px solid rgba(111,255,199,0.24) !important;
+  border-radius: 17px !important;
+}
+
+/* Unified creation card heading */
+#view-time .vault-card h2,
+#view-secret .vault-card h2,
+#view-multisig .vault-card h2 {
+  font-size: 24px !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.035em !important;
+}
+
+/* FAQ heading: smaller, still prominent */
+#view-faq .faq-hero h1 {
+  font-size: clamp(3.5rem, 7vw, 6rem) !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.075em !important;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  #view-time .tool-intro h1,
+  #view-secret .secret-tool-intro h1,
+  #view-multisig .secret-tool-intro h1 {
+    font-size: clamp(3.4rem, 12vw, 5rem) !important;
+  }
+
+  #view-faq .faq-hero h1 {
+    font-size: clamp(3rem, 11vw, 4.5rem) !important;
+  }
+}
+
+/* ===== END VISUAL CONSISTENCY V1 ===== */
+
+
+/* ===== KASLOGIC COMPACT HOMEPAGE V1 ===== */
+
+/* Smaller homepage headline */
+#view-home .v4-hero h1 {
+  font-size: clamp(3.5rem, 5.2vw, 4.5rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.065em !important;
+}
+
+/* Reduce homepage hero vertical spacing */
+#view-home .v4-hero {
+  padding-top: 16px !important;
+  padding-bottom: 28px !important;
+  min-height: 0 !important;
+}
+
+/* Bring live covenants closer to the hero */
+#view-home .explore-section {
+  padding-top: 28px !important;
+  margin-top: 0 !important;
+}
+
+/* Compact spacing on smaller screens */
+@media (max-width: 800px) {
+  #view-home .v4-hero h1 {
+    font-size: clamp(2.8rem, 9vw, 4rem) !important;
+  }
+
+  #view-home .v4-hero {
+    padding-top: 12px !important;
+    padding-bottom: 20px !important;
+  }
+
+  #view-home .explore-section {
+    padding-top: 20px !important;
+  }
+}
+
+/* ===== END COMPACT HOMEPAGE V1 ===== */
+
+/* KASLOGIC HOME PRODUCT PRIORITY V1 */
+
+/* Show available covenants immediately */
+#view-home .explore-section {
+  padding-top: 16px !important;
+  padding-bottom: 28px !important;
+  margin-top: 0 !important;
+}
+
+/* Tighten live covenant heading */
+#view-home .explore-section .section-heading {
+  margin-bottom: 24px !important;
+}
+
+/* Make cards the visual focus */
+#view-home .covenant-options {
+  margin-top: 0 !important;
+}
+
+/* Secondary educational introduction */
+#view-home .v4-hero {
+  padding-top: 40px !important;
+  padding-bottom: 32px !important;
+  min-height: 0 !important;
+  margin-top: 28px !important;
+  border-top: 1px solid rgba(111,255,199,.12);
+}
+
+/* Smaller secondary headline */
+#view-home .v4-hero h1 {
+  font-size: clamp(3rem, 4.5vw, 4rem) !important;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  #view-home .explore-section {
+    padding-top: 12px !important;
+  }
+
+  #view-home .v4-hero {
+    padding-top: 24px !important;
+    margin-top: 20px !important;
+  }
+}
+
+/* ===== KASLOGIC THREE COLUMN CARDS V1 ===== */
+
+/* Compact homepage section heading */
+#view-home .explore-section .section-heading h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.055em !important;
+}
+
+#view-home .explore-section .section-heading {
+  margin-bottom: 20px !important;
+  gap: 20px !important;
+}
+
+/* Three equal-width cards */
+#view-home .covenant-options {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+}
+
+/* Compact cards with subtle interaction */
+#view-home .covenant-option {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+  padding: 24px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease !important;
+}
+
+#view-home .covenant-option:hover {
+  transform: translateY(-5px);
+  border-color: rgba(111,255,199,.55) !important;
+  box-shadow: 0 14px 38px rgba(0,0,0,.25),
+              0 0 20px rgba(111,255,199,.06);
+}
+
+#view-home .covenant-option:focus-visible {
+  outline: 2px solid #6fffc7;
+  outline-offset: 3px;
+}
+
+/* Smaller vault names */
+#view-home .covenant-option h3 {
+  font-size: clamp(1.7rem, 2.3vw, 2.3rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.055em !important;
+  margin-top: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+/* More compact descriptions */
+#view-home .covenant-option .option-description {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  margin-bottom: 18px !important;
+}
+
+/* Compact condition and use-case areas */
+#view-home .covenant-option .condition-box {
+  padding: 12px 14px !important;
+  margin-top: auto !important;
+  margin-bottom: 14px !important;
+}
+
+#view-home .covenant-option .use-cases {
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+#view-home .covenant-option .option-link {
+  margin-top: auto !important;
+  padding-top: 12px !important;
+}
+
+/* Tablet: two columns */
+@media (max-width: 1050px) {
+  #view-home .covenant-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile: one column */
+@media (max-width: 680px) {
+  #view-home .covenant-options {
+    grid-template-columns: 1fr !important;
+  }
+
+  #view-home .covenant-option {
+    padding: 22px 20px !important;
+  }
+
+  #view-home .covenant-option h3 {
+    font-size: 2rem !important;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  #view-home .covenant-option {
+    transition: none !important;
+  }
+
+  #view-home .covenant-option:hover {
+    transform: none !important;
+  }
+}
+
+/* ===== END THREE COLUMN CARDS V1 ===== */
+
+
+/* KASLOGIC HOMEPAGE POLISH V1 */
+
+#view-home .explore-section {
+  padding-bottom: 12px !important;
+  margin-bottom: 0 !important;
+}
+
+#view-home .v4-hero {
+  margin-top: 12px !important;
+  margin-bottom: 0 !important;
+  padding-top: 24px !important;
+  padding-bottom: 18px !important;
+}
+
+#view-home .future-section {
+  margin-top: 0 !important;
+  padding-top: 28px !important;
+  padding-bottom: 48px !important;
+}
+
+#view-home .lab-heading {
+  margin-bottom: 18px !important;
+}
+
+#view-home .lab-heading h2 {
+  font-size: clamp(2rem, 3.8vw, 3.5rem) !important;
+  line-height: 1.05 !important;
+}
+
+#view-home .lab-intro {
+  margin-bottom: 20px !important;
+}
+
+#view-home .lab-grid {
+  gap: 16px !important;
+}
+
+@media (max-width: 800px) {
+  #view-home .v4-hero {
+    padding-top: 20px !important;
+    padding-bottom: 16px !important;
+  }
+
+  #view-home .future-section {
+    padding-top: 24px !important;
+  }
+}
+
+/* KASLOGIC RPC STATUS V2 */
+
+.kas-rpc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.kas-rpc-status #kasRpcStatusText {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.kas-rpc-status[data-state="connected"] .dot {
+  background: #6fffc7 !important;
+  box-shadow: 0 0 10px rgba(111,255,199,.4);
+}
+
+.kas-rpc-status[data-state="connecting"] .dot {
+  background: #e9b85b !important;
+  animation: kasRpcPulse 1.4s ease-in-out infinite;
+}
+
+.kas-rpc-status[data-state="disconnected"] .dot {
+  background: #ff7474 !important;
+}
+
+@keyframes kasRpcPulse {
+  0%, 100% { opacity: .45; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kas-rpc-status .dot {
+    animation: none !important;
+  }
+}
+
+
+/* KASLOGIC MULTISIG CONFIRM MODAL V1 */
+.kaslogic-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 9, 20, 0.78);
+  backdrop-filter: blur(7px);
+}
+
+.kaslogic-confirm-dialog {
+  width: min(100%, 480px);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 18px;
+  background: #121a2a;
+  color: #f4f7fb;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  font-family: inherit;
+}
+
+.kaslogic-confirm-dialog h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.kaslogic-confirm-subtitle {
+  margin: 0 0 24px;
+  color: #9ba9bd;
+  font-size: 13px;
+}
+
+.kaslogic-confirm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.kaslogic-confirm-detail,
+.kaslogic-confirm-destination {
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.035);
+}
+
+.kaslogic-confirm-detail span,
+.kaslogic-confirm-destination span {
+  display: block;
+  margin-bottom: 7px;
+  color: #9ba9bd;
+  font-size: 12px;
+}
+
+.kaslogic-confirm-detail strong {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.kaslogic-confirm-destination code {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #d9e7fa;
+}
+
+.kaslogic-confirm-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.kaslogic-confirm-actions button {
+  flex: 1;
+  min-height: 44px;
+  padding: 11px 14px;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 650;
+}
+
+.kaslogic-confirm-cancel {
+  background: #293449;
+  color: #f4f7fb;
+}
+
+.kaslogic-confirm-approve {
+  background: #49db96;
+  color: #071a13;
+}
+
+.kaslogic-confirm-actions button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .kaslogic-confirm-dialog {
+    padding: 20px;
+  }
+
+  .kaslogic-confirm-grid {
+    gap: 8px;
+  }
+
+  .kaslogic-confirm-actions {
+    flex-direction: column;
+  }
 }
